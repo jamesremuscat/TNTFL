@@ -8,12 +8,14 @@ import android.support.v4.app.FragmentTransaction;
 import com.corefiling.tntfl.Game;
 import com.corefiling.tntfl.Player;
 import com.corefiling.tntfl.R;
+import com.corefiling.tntfl.ui.fragment.NameAndScoreFragment;
+import com.corefiling.tntfl.ui.fragment.NameAndScoreFragment.RetryReceiver;
 import com.corefiling.tntfl.ui.fragment.NameSelectionFragment;
 import com.corefiling.tntfl.ui.fragment.NameSelectionFragment.NameReceiver;
 import com.corefiling.tntfl.ui.fragment.ScoreSelectionFragment;
 import com.corefiling.tntfl.ui.fragment.ScoreSelectionFragment.ScoreReceiver;
 
-public class ScoreEntryActivity extends FragmentActivity implements NameReceiver, ScoreReceiver {
+public class ScoreEntryActivity extends FragmentActivity implements NameReceiver, ScoreReceiver, RetryReceiver {
 
   private static final String RED_FRAGMENT_TAG = "redFragment";
   private static final String BLUE_FRAGMENT_TAG = "blueFragment";
@@ -47,6 +49,10 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
         ssf.setPlayer(Player.RED);
         transaction.replace(R.id.redFragmentHolder, ssf, RED_FRAGMENT_TAG);
         break;
+      case READY_TO_SUBMIT:
+        final NameAndScoreFragment f = NameAndScoreFragment.getInstance(Player.RED, _game.getRedPlayer(), _game.getRedScore());
+        transaction.replace(R.id.redFragmentHolder, f, RED_FRAGMENT_TAG);
+        break;
     }
     switch (_blueState) {
       case NEED_NAME:
@@ -58,6 +64,10 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
         final ScoreSelectionFragment ssf = new ScoreSelectionFragment();
         ssf.setPlayer(Player.BLUE);
         transaction.replace(R.id.blueFragmentHolder, ssf, BLUE_FRAGMENT_TAG);
+        break;
+      case READY_TO_SUBMIT:
+        final NameAndScoreFragment f = NameAndScoreFragment.getInstance(Player.BLUE, _game.getBluePlayer(), _game.getBlueScore());
+        transaction.replace(R.id.blueFragmentHolder, f, BLUE_FRAGMENT_TAG);
         break;
     }
 
@@ -96,6 +106,19 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
       case BLUE:
         _game.setBlueScore(score);
         _blueState = State.READY_TO_SUBMIT;
+    }
+    layoutAsPerState();
+  }
+
+  @Override
+  public void retry(final Player player) {
+    switch(player) {
+      case RED:
+        _redState = State.NEED_NAME;
+        break;
+      case BLUE:
+        _blueState = State.NEED_NAME;
+        break;
     }
     layoutAsPerState();
   }

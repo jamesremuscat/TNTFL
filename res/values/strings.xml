@@ -8,5 +8,6 @@
   <string name="name">Name</string>
   <string name="score">Score</string>
   <string name="ok">OK</string>
+  <string name="enter_again">Enter again</string>
 
 </resources>
