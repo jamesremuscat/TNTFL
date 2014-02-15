@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.corefiling.tntfl.Game;
+import com.corefiling.tntfl.Player;
 import com.corefiling.tntfl.R;
 import com.corefiling.tntfl.ui.fragment.NameSelectionFragment;
 import com.corefiling.tntfl.ui.fragment.NameSelectionFragment.NameReceiver;
@@ -14,8 +15,10 @@ import com.corefiling.tntfl.ui.fragment.ScoreSelectionFragment.ScoreReceiver;
 
 public class ScoreEntryActivity extends FragmentActivity implements NameReceiver, ScoreReceiver {
 
-  private static final String FRAGMENT_TAG = "fragment";
-  private State _state = State.NEED_RED_NAME;
+  private static final String RED_FRAGMENT_TAG = "redFragment";
+  private static final String BLUE_FRAGMENT_TAG = "blueFragment";
+  private State _redState = State.NEED_NAME;
+  private State _blueState = State.NEED_NAME;
   private Game _game;
 
   @Override
@@ -33,60 +36,66 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
     final FragmentManager fm = getSupportFragmentManager();
     final FragmentTransaction transaction = fm.beginTransaction();
 
-    switch (_state) {
-      case NEED_RED_NAME:
-      case NEED_BLUE_NAME:
-        transaction.replace(R.id.fragmentHolder, new NameSelectionFragment(), FRAGMENT_TAG);
+    switch (_redState) {
+      case NEED_NAME:
+        final NameSelectionFragment nsf = new NameSelectionFragment();
+        nsf.setPlayer(Player.RED);
+        transaction.replace(R.id.redFragmentHolder, nsf, RED_FRAGMENT_TAG);
         break;
-      case NEED_RED_SCORE:
-      case NEED_BLUE_SCORE:
-        transaction.replace(R.id.fragmentHolder, new ScoreSelectionFragment(), FRAGMENT_TAG);
-
-      default:
-        transaction.remove(fm.findFragmentByTag(FRAGMENT_TAG));
+      case NEED_SCORE:
+        final ScoreSelectionFragment ssf = new ScoreSelectionFragment();
+        ssf.setPlayer(Player.RED);
+        transaction.replace(R.id.redFragmentHolder, ssf, RED_FRAGMENT_TAG);
+        break;
+    }
+    switch (_blueState) {
+      case NEED_NAME:
+        final NameSelectionFragment nsf = new NameSelectionFragment();
+        nsf.setPlayer(Player.BLUE);
+        transaction.replace(R.id.blueFragmentHolder, nsf, BLUE_FRAGMENT_TAG);
+        break;
+      case NEED_SCORE:
+        final ScoreSelectionFragment ssf = new ScoreSelectionFragment();
+        ssf.setPlayer(Player.BLUE);
+        transaction.replace(R.id.blueFragmentHolder, ssf, BLUE_FRAGMENT_TAG);
+        break;
     }
 
     transaction.commit();
   }
 
   private static enum State {
-    NEED_RED_NAME,
-    NEED_RED_SCORE,
-    NEED_BLUE_NAME,
-    NEED_BLUE_SCORE,
+    NEED_NAME,
+    NEED_SCORE,
     READY_TO_SUBMIT
   }
 
   @Override
-  public void setName(final String name) {
-    switch (_state) {
-      case NEED_RED_NAME:
+  public void setName(final Player player, final String name) {
+
+    switch (player) {
+      case RED:
         _game.setRedPlayer(name);
-        _state = State.NEED_RED_SCORE;
+        _redState = State.NEED_SCORE;
         break;
-      case NEED_BLUE_NAME:
+      case BLUE:
         _game.setBluePlayer(name);
-        _state = State.NEED_BLUE_SCORE;
+        _blueState = State.NEED_SCORE;
         break;
-      default:
-        throw new IllegalStateException("Tried to add a name while we were in " + _state);
     }
     layoutAsPerState();
   }
 
   @Override
-  public void setScore(final int score) {
-    switch (_state) {
-      case NEED_RED_SCORE:
+  public void setScore(final Player player, final int score) {
+    switch (player) {
+      case RED:
         _game.setRedScore(score);
-        _state = State.NEED_BLUE_NAME;
+        _redState = State.READY_TO_SUBMIT;
         break;
-      case NEED_BLUE_SCORE:
+      case BLUE:
         _game.setBlueScore(score);
-        _state = State.READY_TO_SUBMIT;
-        break;
-      default:
-        throw new IllegalStateException("Tried to add a score while we were in " + _state);
+        _blueState = State.READY_TO_SUBMIT;
     }
     layoutAsPerState();
   }

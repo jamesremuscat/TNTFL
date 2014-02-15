@@ -12,11 +12,17 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.corefiling.tntfl.Player;
 import com.corefiling.tntfl.R;
 
 public class NameSelectionFragment extends Fragment {
 
   private NameReceiver _receiver;
+  private Player _player;
+
+  public void setPlayer(final Player player) {
+    _player = player;
+  }
 
   @Override
   public void onAttach(final Activity activity) {
@@ -41,7 +47,7 @@ public class NameSelectionFragment extends Fragment {
         final EditText txtName = (EditText) view.findViewById(R.id.txtName);
         final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(txtName.getWindowToken(), 0);
-        _receiver.setName(txtName.getText().toString());
+        _receiver.setName(_player, txtName.getText().toString());
       }
     });
 
@@ -49,7 +55,7 @@ public class NameSelectionFragment extends Fragment {
   }
 
   public static interface NameReceiver {
-    public void setName(final String name);
+    public void setName(final Player player, final String name);
   }
 
 }

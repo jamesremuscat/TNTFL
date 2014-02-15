@@ -8,11 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.corefiling.tntfl.Player;
 import com.corefiling.tntfl.R;
 
 public class ScoreSelectionFragment extends Fragment {
 
   private ScoreReceiver _receiver;
+
+  private Player _player = Player.RED;
+
+  public void setPlayer(final Player player) {
+    _player = player;
+  }
 
   @Override
   public void onAttach(final Activity activity) {
@@ -52,13 +59,13 @@ public class ScoreSelectionFragment extends Fragment {
 
     @Override
     public void onClick(final View v) {
-      _receiver.setScore(_value);
+      _receiver.setScore(_player, _value);
     }
 
   }
 
   public static interface ScoreReceiver {
-    public void setScore(final int score);
+    public void setScore(final Player player, final int score);
   }
 
 }
