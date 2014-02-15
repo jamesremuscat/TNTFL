@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <string name="app_name">True North Table Football Ladder</string>
-  <string name="title_activity_score_entry">TN Table Football Ladder</string>
+  <string name="app_name">Table Football Ladder</string>
+  <string name="title_activity_score_entry">CFL Table Football Ladder</string>
   <string name="red_player">Red Player</string>
   <string name="blue_player">Blue Player</string>
   <string name="name">Name</string>
