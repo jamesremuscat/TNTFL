@@ -6,7 +6,6 @@ import java.util.List;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -27,7 +26,6 @@ public class TableFootballLadder {
 
     final Type listOfString = new TypeToken<List<String>>() { /* la la la */ }.getType();
     final List<String> list = gson.fromJson(value, listOfString);
-    Log.d("TableFootballLadder", "Recent players: " + list.size());
     return list;
   }
 
