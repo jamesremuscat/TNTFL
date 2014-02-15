@@ -1,7 +1,6 @@
 package com.corefiling.tntfl;
 
 import java.lang.reflect.Type;
-import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
@@ -44,18 +43,47 @@ public class TableFootballLadder {
     e.commit();
   }
 
-  public static SubmittedGame submitGame(final Game game) {
-    // TODO eventually actually talk to the network
-    final SubmittedGame g = new SubmittedGame();
-    g.setRedPlayer(game.getRedPlayer());
-    g.setRedScore(game.getRedScore());
-    g.setBluePlayer(game.getBluePlayer());
-    g.setBlueScore(game.getBlueScore());
-    g.setDateTime(new Date());
-    g.setSkillChange(1138);
-    g.setSkillChangeDirection(Player.BLUE);
+  private static final String LADDER_SUBMIT_URL = "http://www.int.corefiling.com/~aks/football/ladderEdit.cgi?jsonResponse=true&";
 
-    return g;
+  private static HttpAccessStrategy _http = new FakeHttpAccessStrategy();
+
+  public static void setHttpAccessStrategy(final HttpAccessStrategy strategy) {
+    _http = strategy;
+  }
+
+  public static SubmittedGame submitGame(final Game game) {
+
+    final StringBuilder urlBuilder = new StringBuilder(LADDER_SUBMIT_URL);
+    urlBuilder.append("redplayer=");
+    urlBuilder.append(game.getRedPlayer());
+    urlBuilder.append("&");
+    urlBuilder.append("redscore=");
+    urlBuilder.append(game.getRedScore());
+    urlBuilder.append("&");
+    urlBuilder.append("blueplayer=");
+    urlBuilder.append(game.getBluePlayer());
+    urlBuilder.append("&");
+    urlBuilder.append("bluescore=");
+    urlBuilder.append(game.getBlueScore());
+
+    final String url = urlBuilder.toString();
+
+    final String jsonResponse = _http.get(url);
+
+    return SubmittedGame.fromJson(jsonResponse);
+  }
+
+  public static interface HttpAccessStrategy {
+    public String get(final String url);
+  }
+
+  public static class FakeHttpAccessStrategy implements HttpAccessStrategy {
+
+    @Override
+    public String get(final String url) {
+      return "{\"red\":{\"name\":\"jrem\",\"score\":10},\"blue\":{\"name\":\"aks\",\"score\":0},\"skillChange\":{\"change\":11.38,\"towards\":\"red\"}}";
+    }
+
   }
 
 }
