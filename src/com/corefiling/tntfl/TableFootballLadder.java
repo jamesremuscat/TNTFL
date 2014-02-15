@@ -30,6 +30,9 @@ public class TableFootballLadder {
   }
 
   public static void addRecentPlayer(final Context context, final String player) {
+    if (player.isEmpty()) {
+      return;
+    }
     final List<String> recentPlayers = getRecentPlayers(context);
     recentPlayers.remove(player);
     recentPlayers.add(0, player); // put them at top of list
