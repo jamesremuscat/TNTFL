@@ -2,13 +2,16 @@ package com.corefiling.tntfl.ui.fragment;
 
 import java.util.Date;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.corefiling.tntfl.Game;
@@ -28,6 +31,8 @@ public class ScoreSubmissionFragment extends SingleLoaderAsyncFragment<Submitted
 
     return f;
   }
+
+  private Dismissable _parent;
 
   @Override
   public Loader<SubmittedGame> onCreateLoader(final int arg0, final Bundle arg1) {
@@ -57,7 +62,25 @@ public class ScoreSubmissionFragment extends SingleLoaderAsyncFragment<Submitted
   protected View onCreateViewInternal(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
     final View view = inflater.inflate(R.layout.fragment_score_submit, container, false);
 
+    ((Button) view.findViewById(R.id.btnOK)).setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(final View v) {
+        _parent.dismiss();
+      }
+    });
+
     return view;
+  }
+
+  @Override
+  public void onAttach(final Activity activity) {
+    super.onAttach(activity);
+    try {
+      _parent = (Dismissable) activity;
+    }
+    catch (final ClassCastException e) {
+      throw new ClassCastException(activity.toString() + " must implement Dismissable");
+    }
   }
 
   private static class ScoreSubmitter extends AsyncTaskLoader<SubmittedGame> {
@@ -91,6 +114,10 @@ public class ScoreSubmissionFragment extends SingleLoaderAsyncFragment<Submitted
       forceLoad();
     }
 
+  }
+
+  public static interface Dismissable {
+    public void dismiss();
   }
 
 }

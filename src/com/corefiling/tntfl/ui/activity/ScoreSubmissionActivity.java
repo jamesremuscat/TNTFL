@@ -8,8 +8,9 @@ import android.support.v4.app.FragmentTransaction;
 import com.corefiling.tntfl.Game;
 import com.corefiling.tntfl.R;
 import com.corefiling.tntfl.ui.fragment.ScoreSubmissionFragment;
+import com.corefiling.tntfl.ui.fragment.ScoreSubmissionFragment.Dismissable;
 
-public class ScoreSubmissionActivity extends FragmentActivity {
+public class ScoreSubmissionActivity extends FragmentActivity implements Dismissable {
 
   public static final String BUNDLE_GAME_KEY = "game";
 
@@ -28,6 +29,11 @@ public class ScoreSubmissionActivity extends FragmentActivity {
 
     transaction.commit();
 
+  }
+
+  @Override
+  public void dismiss() {
+    finish();
   }
 
 }
