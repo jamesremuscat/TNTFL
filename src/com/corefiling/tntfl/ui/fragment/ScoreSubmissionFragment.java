@@ -52,7 +52,7 @@ public class ScoreSubmissionFragment extends SingleLoaderAsyncFragment<Submitted
     ((TextView) getActivity().findViewById(R.id.txtRedName)).setText(game.getRedPlayer());
     ((TextView) getActivity().findViewById(R.id.txtRedScore)).setText(Integer.toString(game.getRedScore()));
     final TextView txtSkillChange = (TextView) getActivity().findViewById(R.id.txtSkillChange);
-    txtSkillChange.setText(Double.toString(game.getSkillChange()));
+    txtSkillChange.setText(String.format("%.3f", game.getSkillChange()));
 
     if (game.getSkillChangeDirection() == Player.RED) {
       txtSkillChange.setBackgroundResource(R.drawable.red_gradient);
