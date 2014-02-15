@@ -62,7 +62,7 @@ public class NameSelectionFragment extends Fragment {
     return view;
   }
 
-  private static class NameButtonsAdapter extends ArrayAdapter<String> {
+  private class NameButtonsAdapter extends ArrayAdapter<String> {
 
     public NameButtonsAdapter(final Context context, final List<String> names) {
       super(context, 0, names);
@@ -77,6 +77,12 @@ public class NameSelectionFragment extends Fragment {
       t.setText(name);
       t.setTextAppearance(context, android.R.style.TextAppearance_Large);
       t.setTextSize(context.getResources().getDimension(R.dimen.big_font_size));
+      t.setOnClickListener(new OnClickListener() {
+        @Override
+        public void onClick(final View v) {
+          _receiver.setName(_player, name);
+        }
+      });
       return t;
     }
 
