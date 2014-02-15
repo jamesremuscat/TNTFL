@@ -50,9 +50,13 @@ public class NameSelectionFragment extends Fragment {
       @Override
       public void onClick(final View v) {
         final EditText txtName = (EditText) view.findViewById(R.id.txtName);
-        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(txtName.getWindowToken(), 0);
-        _receiver.setName(_player, txtName.getText().toString());
+        final String playerName = txtName.getText().toString();
+
+        if (!playerName.isEmpty()) {
+          final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+          imm.hideSoftInputFromWindow(txtName.getWindowToken(), 0);
+          _receiver.setName(_player, playerName);
+        }
       }
     });
 
