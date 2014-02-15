@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.corefiling.tntfl.Player;
 import com.corefiling.tntfl.R;
@@ -16,9 +17,14 @@ public class ScoreSelectionFragment extends Fragment {
   private ScoreReceiver _receiver;
 
   private Player _player = Player.RED;
+  private String _playerName;
 
   public void setPlayer(final Player player) {
     _player = player;
+  }
+
+  public void setPlayerName(final String playerName) {
+    _playerName = playerName;
   }
 
   @Override
@@ -46,6 +52,7 @@ public class ScoreSelectionFragment extends Fragment {
     ((Button) view.findViewById(R.id.button8)).setOnClickListener(new ScoreButtonListener(8));
     ((Button) view.findViewById(R.id.button9)).setOnClickListener(new ScoreButtonListener(9));
     ((Button) view.findViewById(R.id.button10)).setOnClickListener(new ScoreButtonListener(10));
+    ((TextView) view.findViewById(R.id.txtPlayerName)).setText(_playerName);
     return view;
   }
 

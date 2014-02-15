@@ -64,6 +64,7 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
       case NEED_SCORE:
         final ScoreSelectionFragment ssf = new ScoreSelectionFragment();
         ssf.setPlayer(Player.RED);
+        ssf.setPlayerName(_game.getRedPlayer());
         transaction.replace(R.id.redFragmentHolder, ssf, RED_FRAGMENT_TAG);
         break;
       case READY_TO_SUBMIT:
@@ -80,6 +81,7 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
       case NEED_SCORE:
         final ScoreSelectionFragment ssf = new ScoreSelectionFragment();
         ssf.setPlayer(Player.BLUE);
+        ssf.setPlayerName(_game.getBluePlayer());
         transaction.replace(R.id.blueFragmentHolder, ssf, BLUE_FRAGMENT_TAG);
         break;
       case READY_TO_SUBMIT:
