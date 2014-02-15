@@ -1,7 +1,5 @@
 package com.corefiling.tntfl.ui.fragment;
 
-import java.util.Date;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -114,19 +112,7 @@ public class ScoreSubmissionFragment extends SingleLoaderAsyncFragment<Submitted
 
     @Override
     public SubmittedGame loadInBackground() {
-      // here we need to use _game to make the GET request to the ladder, then parse the JSON response.
-      // TODO actually do that
-
-      final SubmittedGame g = new SubmittedGame();
-      g.setRedPlayer(_game.getRedPlayer());
-      g.setRedScore(_game.getRedScore());
-      g.setBluePlayer(_game.getBluePlayer());
-      g.setBlueScore(_game.getBlueScore());
-      g.setDateTime(new Date());
-      g.setSkillChange(1138);
-      g.setSkillChangeDirection(Player.BLUE);
-
-      return g;
+      return TableFootballLadder.submitGame(_game);
     }
 
     @Override

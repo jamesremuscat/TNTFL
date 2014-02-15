@@ -1,6 +1,7 @@
 package com.corefiling.tntfl;
 
 import java.lang.reflect.Type;
+import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
@@ -41,6 +42,20 @@ public class TableFootballLadder {
     final Editor e = prefs.edit();
     e.putString(RECENT_PLAYERS, value);
     e.commit();
+  }
+
+  public static SubmittedGame submitGame(final Game game) {
+    // TODO eventually actually talk to the network
+    final SubmittedGame g = new SubmittedGame();
+    g.setRedPlayer(game.getRedPlayer());
+    g.setRedScore(game.getRedScore());
+    g.setBluePlayer(game.getBluePlayer());
+    g.setBlueScore(game.getBlueScore());
+    g.setDateTime(new Date());
+    g.setSkillChange(1138);
+    g.setSkillChangeDirection(Player.BLUE);
+
+    return g;
   }
 
 }
