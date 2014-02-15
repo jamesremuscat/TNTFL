@@ -9,8 +9,10 @@ import com.corefiling.tntfl.Game;
 import com.corefiling.tntfl.R;
 import com.corefiling.tntfl.ui.fragment.NameSelectionFragment;
 import com.corefiling.tntfl.ui.fragment.NameSelectionFragment.NameReceiver;
+import com.corefiling.tntfl.ui.fragment.ScoreSelectionFragment;
+import com.corefiling.tntfl.ui.fragment.ScoreSelectionFragment.ScoreReceiver;
 
-public class ScoreEntryActivity extends FragmentActivity implements NameReceiver {
+public class ScoreEntryActivity extends FragmentActivity implements NameReceiver, ScoreReceiver {
 
   private static final String FRAGMENT_TAG = "fragment";
   private State _state = State.NEED_RED_NAME;
@@ -36,6 +38,10 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
       case NEED_BLUE_NAME:
         transaction.replace(R.id.fragmentHolder, new NameSelectionFragment(), FRAGMENT_TAG);
         break;
+      case NEED_RED_SCORE:
+      case NEED_BLUE_SCORE:
+        transaction.replace(R.id.fragmentHolder, new ScoreSelectionFragment(), FRAGMENT_TAG);
+
       default:
         transaction.remove(fm.findFragmentByTag(FRAGMENT_TAG));
     }
@@ -64,6 +70,23 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
         break;
       default:
         throw new IllegalStateException("Tried to add a name while we were in " + _state);
+    }
+    layoutAsPerState();
+  }
+
+  @Override
+  public void setScore(final int score) {
+    switch (_state) {
+      case NEED_RED_SCORE:
+        _game.setRedScore(score);
+        _state = State.NEED_BLUE_NAME;
+        break;
+      case NEED_BLUE_SCORE:
+        _game.setBlueScore(score);
+        _state = State.READY_TO_SUBMIT;
+        break;
+      default:
+        throw new IllegalStateException("Tried to add a score while we were in " + _state);
     }
     layoutAsPerState();
   }
