@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 
 import com.corefiling.tntfl.Game;
 import com.corefiling.tntfl.Player;
@@ -72,6 +73,12 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
     }
 
     transaction.commit();
+
+    if (_blueState == State.READY_TO_SUBMIT && _redState == State.READY_TO_SUBMIT) {
+      findViewById(R.id.btnSubmit).setVisibility(View.VISIBLE);
+    } else {
+      findViewById(R.id.btnSubmit).setVisibility(View.INVISIBLE);
+    }
   }
 
   private static enum State {

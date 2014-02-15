@@ -9,5 +9,6 @@
   <string name="score">Score</string>
   <string name="ok">OK</string>
   <string name="enter_again">Edit&#8230;</string>
+  <string name="submit">Submit Game</string>
 
 </resources>
