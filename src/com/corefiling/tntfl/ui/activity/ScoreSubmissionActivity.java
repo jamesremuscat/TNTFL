@@ -33,6 +33,7 @@ public class ScoreSubmissionActivity extends FragmentActivity implements Dismiss
 
   @Override
   public void dismiss() {
+    setResult(RESULT_OK);
     finish();
   }
 

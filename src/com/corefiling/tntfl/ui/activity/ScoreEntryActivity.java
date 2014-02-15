@@ -23,6 +23,8 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
 
   private static final String RED_FRAGMENT_TAG = "redFragment";
   private static final String BLUE_FRAGMENT_TAG = "blueFragment";
+  private static final int SCORE_SUBMISSION_REQUEST_CODE = 1138;
+
   private State _redState = State.NEED_NAME;
   private State _blueState = State.NEED_NAME;
   private Game _game;
@@ -41,7 +43,7 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
         final Bundle b = new Bundle();
         b.putParcelable(ScoreSubmissionActivity.BUNDLE_GAME_KEY, _game);
         i.putExtras(b);
-        startActivity(i);
+        startActivityForResult(i, SCORE_SUBMISSION_REQUEST_CODE);
       }
     });
 
@@ -92,6 +94,13 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
       findViewById(R.id.btnSubmit).setVisibility(View.VISIBLE);
     } else {
       findViewById(R.id.btnSubmit).setVisibility(View.INVISIBLE);
+    }
+  }
+
+  @Override
+  protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+    if (requestCode == SCORE_SUBMISSION_REQUEST_CODE && resultCode == RESULT_OK) {
+      recreate();
     }
   }
 
