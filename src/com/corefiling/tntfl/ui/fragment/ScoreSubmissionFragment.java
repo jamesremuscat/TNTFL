@@ -4,6 +4,12 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.GradientDrawable.Orientation;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -40,6 +46,7 @@ public class ScoreSubmissionFragment extends SingleLoaderAsyncFragment<Submitted
     return new ScoreSubmitter((Game) getArguments().getParcelable(ScoreSubmissionActivity.BUNDLE_GAME_KEY), getActivity());
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   public void onLoadFinished(final Loader<SubmittedGame> arg0, final SubmittedGame game) {
     ((TextView) getActivity().findViewById(R.id.txtBlueName)).setText(game.getBluePlayer());
@@ -58,6 +65,15 @@ public class ScoreSubmissionFragment extends SingleLoaderAsyncFragment<Submitted
 
     TableFootballLadder.addRecentPlayer(getActivity(), game.getRedPlayer());
     TableFootballLadder.addRecentPlayer(getActivity(), game.getBluePlayer());
+
+    if (game.getRedScore() == 10 && game.getBlueScore() == 0 || game.getRedScore() == 0 && game.getBlueScore() == 10) {
+      final Resources resources = getActivity().getResources();
+      final Drawable baseState = resources.getDrawable(R.drawable.red_blue_gradient);
+      final Drawable middleState = new GradientDrawable((game.getRedScore() == 10) ? Orientation.LEFT_RIGHT : Orientation.RIGHT_LEFT, new int[] {Color.YELLOW, Color.BLACK});
+      final TransitionDrawable td = new TransitionDrawable(new Drawable[] { baseState, middleState });
+      getActivity().findViewById(R.id.scoresBox).setBackgroundDrawable(td);
+      td.startTransition(2000);
+    }
 
     setContentShown(true);
   }
