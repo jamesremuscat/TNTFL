@@ -1,14 +1,16 @@
 package com.corefiling.tntfl.ui.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import com.corefiling.tntfl.R;
 
@@ -36,7 +38,9 @@ public class NameSelectionFragment extends Fragment {
 
       @Override
       public void onClick(final View v) {
-        final TextView txtName = (TextView) view.findViewById(R.id.txtName);
+        final EditText txtName = (EditText) view.findViewById(R.id.txtName);
+        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(txtName.getWindowToken(), 0);
         _receiver.setName(txtName.getText().toString());
       }
     });
