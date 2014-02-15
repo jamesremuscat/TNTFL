@@ -1,10 +1,13 @@
 package com.corefiling.tntfl.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 import com.corefiling.tntfl.Game;
 import com.corefiling.tntfl.Player;
@@ -30,6 +33,17 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
     setContentView(R.layout.activity_score_entry);
 
     _game = new Game();
+
+    ((Button) findViewById(R.id.btnSubmit)).setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(final View v) {
+        final Intent i = new Intent(getApplicationContext(), ScoreSubmissionActivity.class);
+        final Bundle b = new Bundle();
+        b.putParcelable(ScoreSubmissionActivity.BUNDLE_GAME_KEY, _game);
+        i.putExtras(b);
+        startActivity(i);
+      }
+    });
 
     layoutAsPerState();
 

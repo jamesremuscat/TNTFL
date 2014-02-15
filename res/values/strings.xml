@@ -10,5 +10,7 @@
   <string name="ok">OK</string>
   <string name="enter_again">Edit&#8230;</string>
   <string name="submit">Submit Game</string>
+  <string name="skill">Skill Change</string>
+  <string name="score_separator">-</string>
 
 </resources>
