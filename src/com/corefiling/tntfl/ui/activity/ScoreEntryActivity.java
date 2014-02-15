@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.corefiling.tntfl.Game;
 import com.corefiling.tntfl.Player;
@@ -103,8 +104,15 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
 
   @Override
   protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-    if (requestCode == SCORE_SUBMISSION_REQUEST_CODE && resultCode == RESULT_OK) {
-      recreate();
+    if (requestCode == SCORE_SUBMISSION_REQUEST_CODE) {
+      if (resultCode == RESULT_OK) {
+        recreate();
+      }
+      else if (resultCode == RESULT_CANCELED) {
+        final Exception e = (Exception) data.getSerializableExtra("exception");
+        final Toast toast = Toast.makeText(this, "Could not submit game! Reason: " + e.getLocalizedMessage(), Toast.LENGTH_LONG);
+        toast.show();
+      }
     }
   }
 

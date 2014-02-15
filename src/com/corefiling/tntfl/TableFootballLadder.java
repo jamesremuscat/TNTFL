@@ -1,7 +1,16 @@
 package com.corefiling.tntfl;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -54,7 +63,7 @@ public class TableFootballLadder {
     _http = strategy;
   }
 
-  public static SubmittedGame submitGame(final Game game) {
+  public static SubmittedGame submitGame(final Game game) throws SubmissionException {
 
     final StringBuilder urlBuilder = new StringBuilder(LADDER_SUBMIT_URL);
     urlBuilder.append("redplayer=");
@@ -77,7 +86,7 @@ public class TableFootballLadder {
   }
 
   public static interface HttpAccessStrategy {
-    public String get(final String url);
+    public String get(final String url) throws SubmissionException;
   }
 
   public static class FakeHttpAccessStrategy implements HttpAccessStrategy {
@@ -87,6 +96,46 @@ public class TableFootballLadder {
       return "{\"red\":{\"name\":\"jrem\",\"score\":10},\"blue\":{\"name\":\"aks\",\"score\":0},\"skillChange\":{\"change\":11.38,\"towards\":\"red\"}}";
     }
 
+  }
+
+  public static class FullHttpAccessStrategy implements HttpAccessStrategy {
+
+    @Override
+    public String get(final String url) throws SubmissionException {
+      final HttpClient httpclient = new DefaultHttpClient();
+      HttpResponse response;
+      try {
+        response = httpclient.execute(new HttpGet(url));
+        final StatusLine statusLine = response.getStatusLine();
+        if(statusLine.getStatusCode() == HttpStatus.SC_OK){
+          final ByteArrayOutputStream out = new ByteArrayOutputStream();
+          response.getEntity().writeTo(out);
+          out.close();
+          return out.toString();
+        } else {
+          response.getEntity().getContent().close();
+          throw new SubmissionException(statusLine.getReasonPhrase());
+        }
+      }
+      catch (final IOException e) {
+        throw new SubmissionException(e);
+      }
+    }
+
+  }
+
+  public static class SubmissionException extends Exception {
+
+    private static final long serialVersionUID = 2244020040887984376L;
+
+    public SubmissionException(final Exception e) {
+      super(e);
+    }
+    // blah
+
+    public SubmissionException(final String reasonPhrase) {
+      super(reasonPhrase);
+    }
   }
 
 }

@@ -2,6 +2,7 @@ package com.corefiling.tntfl.ui.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -23,9 +24,11 @@ import com.corefiling.tntfl.Player;
 import com.corefiling.tntfl.R;
 import com.corefiling.tntfl.SubmittedGame;
 import com.corefiling.tntfl.TableFootballLadder;
+import com.corefiling.tntfl.TableFootballLadder.SubmissionException;
 import com.corefiling.tntfl.ui.activity.ScoreSubmissionActivity;
+import com.corefiling.tntfl.ui.fragment.ScoreSubmissionFragment.SubmissionResult;
 
-public class ScoreSubmissionFragment extends SingleLoaderAsyncFragment<SubmittedGame> {
+public class ScoreSubmissionFragment extends SingleLoaderAsyncFragment<SubmissionResult> {
 
   public static ScoreSubmissionFragment getInstance(final Game game) {
     final ScoreSubmissionFragment f = new ScoreSubmissionFragment();
@@ -40,40 +43,50 @@ public class ScoreSubmissionFragment extends SingleLoaderAsyncFragment<Submitted
   private Dismissable _parent;
 
   @Override
-  public Loader<SubmittedGame> onCreateLoader(final int arg0, final Bundle arg1) {
+  public Loader<SubmissionResult> onCreateLoader(final int arg0, final Bundle arg1) {
     return new ScoreSubmitter((Game) getArguments().getParcelable(ScoreSubmissionActivity.BUNDLE_GAME_KEY), getActivity());
   }
 
   @SuppressWarnings("deprecation")
   @Override
-  public void onLoadFinished(final Loader<SubmittedGame> arg0, final SubmittedGame game) {
-    ((TextView) getActivity().findViewById(R.id.txtBlueName)).setText(game.getBluePlayer());
-    ((TextView) getActivity().findViewById(R.id.txtBlueScore)).setText(Integer.toString(game.getBlueScore()));
-    ((TextView) getActivity().findViewById(R.id.txtRedName)).setText(game.getRedPlayer());
-    ((TextView) getActivity().findViewById(R.id.txtRedScore)).setText(Integer.toString(game.getRedScore()));
-    final TextView txtSkillChange = (TextView) getActivity().findViewById(R.id.txtSkillChange);
-    txtSkillChange.setText(String.format("%.3f", game.getSkillChange()));
+  public void onLoadFinished(final Loader<SubmissionResult> arg0, final SubmissionResult result) {
 
-    if (game.getSkillChangeDirection() == Player.RED) {
-      txtSkillChange.setBackgroundResource(R.drawable.red_gradient);
+    if (result._game != null) {
+      final SubmittedGame game = result._game;
+      ((TextView) getActivity().findViewById(R.id.txtBlueName)).setText(game.getBluePlayer());
+      ((TextView) getActivity().findViewById(R.id.txtBlueScore)).setText(Integer.toString(game.getBlueScore()));
+      ((TextView) getActivity().findViewById(R.id.txtRedName)).setText(game.getRedPlayer());
+      ((TextView) getActivity().findViewById(R.id.txtRedScore)).setText(Integer.toString(game.getRedScore()));
+      final TextView txtSkillChange = (TextView) getActivity().findViewById(R.id.txtSkillChange);
+      txtSkillChange.setText(String.format("%.3f", game.getSkillChange()));
+
+      if (game.getSkillChangeDirection() == Player.RED) {
+        txtSkillChange.setBackgroundResource(R.drawable.red_gradient);
+      }
+      else {
+        txtSkillChange.setBackgroundResource(R.drawable.blue_gradient);
+      }
+
+      TableFootballLadder.addRecentPlayer(getActivity(), game.getRedPlayer());
+      TableFootballLadder.addRecentPlayer(getActivity(), game.getBluePlayer());
+
+      if (game.getRedScore() == 10 && game.getBlueScore() == 0 || game.getRedScore() == 0 && game.getBlueScore() == 10) {
+        final Resources resources = getActivity().getResources();
+        final Drawable baseState = resources.getDrawable(R.drawable.red_blue_gradient);
+        final Drawable middleState = new GradientDrawable((game.getRedScore() == 10) ? Orientation.LEFT_RIGHT : Orientation.RIGHT_LEFT, new int[] {Color.YELLOW, Color.BLACK});
+        final TransitionDrawable td = new TransitionDrawable(new Drawable[] { baseState, middleState });
+        getActivity().findViewById(R.id.scoresBox).setBackgroundDrawable(td);
+        td.startTransition(2000);
+      }
+
+      setContentShown(true);
     }
     else {
-      txtSkillChange.setBackgroundResource(R.drawable.blue_gradient);
+      final Intent intent = new Intent("com.corefiling.ScoreSubmission");
+      intent.putExtra("exception", result._exception);
+      getActivity().setResult(Activity.RESULT_CANCELED, intent);
+      getActivity().finish();
     }
-
-    TableFootballLadder.addRecentPlayer(getActivity(), game.getRedPlayer());
-    TableFootballLadder.addRecentPlayer(getActivity(), game.getBluePlayer());
-
-    if (game.getRedScore() == 10 && game.getBlueScore() == 0 || game.getRedScore() == 0 && game.getBlueScore() == 10) {
-      final Resources resources = getActivity().getResources();
-      final Drawable baseState = resources.getDrawable(R.drawable.red_blue_gradient);
-      final Drawable middleState = new GradientDrawable((game.getRedScore() == 10) ? Orientation.LEFT_RIGHT : Orientation.RIGHT_LEFT, new int[] {Color.YELLOW, Color.BLACK});
-      final TransitionDrawable td = new TransitionDrawable(new Drawable[] { baseState, middleState });
-      getActivity().findViewById(R.id.scoresBox).setBackgroundDrawable(td);
-      td.startTransition(2000);
-    }
-
-    setContentShown(true);
   }
 
   @Override
@@ -101,7 +114,7 @@ public class ScoreSubmissionFragment extends SingleLoaderAsyncFragment<Submitted
     }
   }
 
-  private static class ScoreSubmitter extends AsyncTaskLoader<SubmittedGame> {
+  private static class ScoreSubmitter extends AsyncTaskLoader<SubmissionResult> {
 
     private final Game _game;
 
@@ -111,8 +124,16 @@ public class ScoreSubmissionFragment extends SingleLoaderAsyncFragment<Submitted
     }
 
     @Override
-    public SubmittedGame loadInBackground() {
-      return TableFootballLadder.submitGame(_game);
+    public SubmissionResult loadInBackground() {
+      final SubmissionResult result = new SubmissionResult();
+      try {
+        result._game = TableFootballLadder.submitGame(_game);
+      }
+      catch (final SubmissionException e) {
+        result._exception = e;
+      }
+
+      return result;
     }
 
     @Override
@@ -120,6 +141,11 @@ public class ScoreSubmissionFragment extends SingleLoaderAsyncFragment<Submitted
       forceLoad();
     }
 
+  }
+
+  public static class SubmissionResult {
+    public SubmittedGame _game;
+    public Exception _exception;
   }
 
   public static interface Dismissable {
