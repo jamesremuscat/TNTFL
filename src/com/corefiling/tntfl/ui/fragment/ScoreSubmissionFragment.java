@@ -18,6 +18,7 @@ import com.corefiling.tntfl.Game;
 import com.corefiling.tntfl.Player;
 import com.corefiling.tntfl.R;
 import com.corefiling.tntfl.SubmittedGame;
+import com.corefiling.tntfl.TableFootballLadder;
 import com.corefiling.tntfl.ui.activity.ScoreSubmissionActivity;
 
 public class ScoreSubmissionFragment extends SingleLoaderAsyncFragment<SubmittedGame> {
@@ -54,6 +55,9 @@ public class ScoreSubmissionFragment extends SingleLoaderAsyncFragment<Submitted
     else {
       txtSkillChange.setBackgroundResource(R.drawable.blue_gradient);
     }
+
+    TableFootballLadder.addRecentPlayer(getActivity(), game.getRedPlayer());
+    TableFootballLadder.addRecentPlayer(getActivity(), game.getBluePlayer());
 
     setContentShown(true);
   }
