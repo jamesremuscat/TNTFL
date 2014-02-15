@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
-  <TextView android:id="@+id/lblName" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:textSize="@dimen/bigger_font_size" />
-  <TextView android:id="@+id/lblScore" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:textSize="@dimen/massive_font_size" />
+  <TextView android:id="@+id/lblName" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:textColor="@color/text" android:textSize="@dimen/bigger_font_size" />
+  <TextView android:id="@+id/lblScore" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:textColor="@color/text" android:textSize="@dimen/massive_font_size" />
   <Button android:id="@+id/btnEnterAgain" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:text="@string/enter_again" />
 
 </LinearLayout>
