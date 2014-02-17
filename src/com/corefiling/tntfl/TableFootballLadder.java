@@ -55,9 +55,9 @@ public class TableFootballLadder {
     e.commit();
   }
 
-  private static final String LADDER_SUBMIT_URL = "http://www.int.corefiling.com/~aks/football/ladderEdit.cgi?jsonResponse=true&";
+  private static final String LADDER_SUBMIT_URL = "http://www.int.corefiling.com/~aks/football-dev/football.cgi?jsonResponse=true&";
 
-  private static HttpAccessStrategy _http = new FakeHttpAccessStrategy();
+  private static HttpAccessStrategy _http = new FullHttpAccessStrategy();
 
   public static void setHttpAccessStrategy(final HttpAccessStrategy strategy) {
     _http = strategy;
