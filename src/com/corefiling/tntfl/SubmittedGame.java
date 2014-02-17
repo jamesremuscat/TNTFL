@@ -44,15 +44,30 @@ public class SubmittedGame extends Game {
     g.setBluePlayer(bluePlayer.get("name").getAsString());
     g.setBlueScore(bluePlayer.get("score").getAsInt());
 
-    final JsonObject skill = o.get("skillChange").getAsJsonObject();
-    g.setSkillChange(skill.get("change").getAsFloat());
+    if (o.has("skillChange")) { // nicer version of JSON
+      final JsonObject skill = o.get("skillChange").getAsJsonObject();
+      g.setSkillChange(skill.get("change").getAsFloat());
 
-    final String towards = skill.get("towards").getAsString();
-    if ("red".equalsIgnoreCase(towards)) {
-      g.setSkillChangeDirection(Player.RED);
+      final String towards = skill.get("towards").getAsString();
+      if ("red".equalsIgnoreCase(towards)) {
+        g.setSkillChangeDirection(Player.RED);
+      }
+      else if ("blue".equalsIgnoreCase(towards)) {
+        g.setSkillChangeDirection(Player.BLUE);
+      }
     }
-    else if ("blue".equalsIgnoreCase(towards)) {
-      g.setSkillChangeDirection(Player.BLUE);
+    else if (redPlayer.has("skillChange")) { // older version of JSON
+      final float redSkill = redPlayer.get("skillChange").getAsFloat();
+      final float blueSkill = bluePlayer.get("skillChange").getAsFloat();
+      if (redSkill > 0) {
+        g.setSkillChangeDirection(Player.RED);
+        g.setSkillChange(redSkill);
+      }
+      else if (blueSkill > 0) {
+        g.setSkillChangeDirection(Player.BLUE);
+        g.setSkillChange(blueSkill);
+      }
+
     }
 
     g.setDateTime(new Date());
