@@ -3,7 +3,6 @@ package com.corefiling.tntfl;
 import java.lang.reflect.Type;
 import java.util.List;
 
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -57,6 +56,10 @@ public class TableFootballLadder {
     _http = strategy;
   }
 
+  private static HttpAccessStrategy getHttpAccessStrategy() {
+    return _http;
+  }
+
   public static SubmittedGame submitGame(final Game game) throws SubmissionException {
 
     final StringBuilder urlBuilder = new StringBuilder(LADDER_SUBMIT_URL);
@@ -74,7 +77,7 @@ public class TableFootballLadder {
 
     final String url = urlBuilder.toString();
 
-    final String jsonResponse = _http.get(url);
+    final String jsonResponse = getHttpAccessStrategy().get(url);
 
     return SubmittedGame.fromJson(jsonResponse);
   }
