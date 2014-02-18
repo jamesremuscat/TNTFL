@@ -48,11 +48,28 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
       }
     });
 
+    //    TODO: This code works, but exposes the fact that all the child fragments lose their state when you change orientation etc.
+    //    Fix the child fragments before uncommenting this!
+    //    if (savedInstanceState != null) {
+    //      if (savedInstanceState.containsKey(RED_FRAGMENT_TAG)) {
+    //        _redState = (State) savedInstanceState.getSerializable(RED_FRAGMENT_TAG);
+    //      }
+    //      if (savedInstanceState.containsKey(BLUE_FRAGMENT_TAG)) {
+    //        _blueState = (State) savedInstanceState.getSerializable(BLUE_FRAGMENT_TAG);
+    //      }
+    //    }
+
     layoutAsPerState(Player.RED);
     layoutAsPerState(Player.BLUE);
 
     final View decorView = getWindow().getDecorView();
     decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
+  }
+
+  @Override
+  protected void onSaveInstanceState(final Bundle outState) {
+    outState.putSerializable(RED_FRAGMENT_TAG, _redState);
+    outState.putSerializable(BLUE_FRAGMENT_TAG, _blueState);
   }
 
   protected void layoutAsPerState(final Player player) {
