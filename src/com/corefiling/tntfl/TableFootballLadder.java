@@ -51,6 +51,7 @@ public class TableFootballLadder {
     e.commit();
   }
 
+  private static final String COREFILING_INTERNAL_WIFI_SSID = "cfl_staff";
   private static final String LADDER_SUBMIT_URL = "http://www.int.corefiling.com/~aks/football/football.cgi?jsonResponse=true&";
 
   private static HttpAccessStrategy _http = null;
@@ -66,7 +67,7 @@ public class TableFootballLadder {
       final WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
       final String currentSSID = wm.getConnectionInfo().getSSID(); // Ick, this returns a string in double quotes
 
-      if (currentSSID != null && currentSSID.contains("cfl_staff")) {
+      if (currentSSID != null && currentSSID.contains(COREFILING_INTERNAL_WIFI_SSID)) {
         _http = new FullHttpAccessStrategy();
       }
       else {
