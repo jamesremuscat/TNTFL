@@ -139,8 +139,9 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
           toast.show();
         }
         else {
-          final Toast toast = Toast.makeText(this, "Could not submit game! No reason was given, or you pressed Back too soon.", Toast.LENGTH_LONG);
-          toast.show();
+          // We get here if you press Back on the results screen
+          _redState = State.NEED_NAME;
+          _blueState = State.NEED_NAME;
         }
       }
     }
