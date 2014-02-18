@@ -48,49 +48,55 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
       }
     });
 
-    layoutAsPerState();
+    layoutAsPerState(Player.RED);
+    layoutAsPerState(Player.BLUE);
 
     final View decorView = getWindow().getDecorView();
     decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
   }
 
-  protected void layoutAsPerState() {
+  protected void layoutAsPerState(final Player player) {
     final FragmentManager fm = getSupportFragmentManager();
     final FragmentTransaction transaction = fm.beginTransaction();
 
-    switch (_redState) {
-      case NEED_NAME:
-        final NameSelectionFragment nsf = new NameSelectionFragment();
-        nsf.setPlayer(Player.RED);
-        transaction.replace(R.id.redFragmentHolder, nsf, RED_FRAGMENT_TAG);
-        break;
-      case NEED_SCORE:
-        final ScoreSelectionFragment ssf = new ScoreSelectionFragment();
-        ssf.setPlayer(Player.RED);
-        ssf.setPlayerName(_game.getRedPlayer());
-        transaction.replace(R.id.redFragmentHolder, ssf, RED_FRAGMENT_TAG);
-        break;
-      case READY_TO_SUBMIT:
-        final NameAndScoreFragment f = NameAndScoreFragment.getInstance(Player.RED, _game.getRedPlayer(), _game.getRedScore());
-        transaction.replace(R.id.redFragmentHolder, f, RED_FRAGMENT_TAG);
-        break;
+    if (player == Player.RED) {
+
+      switch (_redState) {
+        case NEED_NAME:
+          final NameSelectionFragment nsf = new NameSelectionFragment();
+          nsf.setPlayer(Player.RED);
+          transaction.replace(R.id.redFragmentHolder, nsf, RED_FRAGMENT_TAG);
+          break;
+        case NEED_SCORE:
+          final ScoreSelectionFragment ssf = new ScoreSelectionFragment();
+          ssf.setPlayer(Player.RED);
+          ssf.setPlayerName(_game.getRedPlayer());
+          transaction.replace(R.id.redFragmentHolder, ssf, RED_FRAGMENT_TAG);
+          break;
+        case READY_TO_SUBMIT:
+          final NameAndScoreFragment f = NameAndScoreFragment.getInstance(Player.RED, _game.getRedPlayer(), _game.getRedScore());
+          transaction.replace(R.id.redFragmentHolder, f, RED_FRAGMENT_TAG);
+          break;
+      }
     }
-    switch (_blueState) {
-      case NEED_NAME:
-        final NameSelectionFragment nsf = new NameSelectionFragment();
-        nsf.setPlayer(Player.BLUE);
-        transaction.replace(R.id.blueFragmentHolder, nsf, BLUE_FRAGMENT_TAG);
-        break;
-      case NEED_SCORE:
-        final ScoreSelectionFragment ssf = new ScoreSelectionFragment();
-        ssf.setPlayer(Player.BLUE);
-        ssf.setPlayerName(_game.getBluePlayer());
-        transaction.replace(R.id.blueFragmentHolder, ssf, BLUE_FRAGMENT_TAG);
-        break;
-      case READY_TO_SUBMIT:
-        final NameAndScoreFragment f = NameAndScoreFragment.getInstance(Player.BLUE, _game.getBluePlayer(), _game.getBlueScore());
-        transaction.replace(R.id.blueFragmentHolder, f, BLUE_FRAGMENT_TAG);
-        break;
+    else {
+      switch (_blueState) {
+        case NEED_NAME:
+          final NameSelectionFragment nsf = new NameSelectionFragment();
+          nsf.setPlayer(Player.BLUE);
+          transaction.replace(R.id.blueFragmentHolder, nsf, BLUE_FRAGMENT_TAG);
+          break;
+        case NEED_SCORE:
+          final ScoreSelectionFragment ssf = new ScoreSelectionFragment();
+          ssf.setPlayer(Player.BLUE);
+          ssf.setPlayerName(_game.getBluePlayer());
+          transaction.replace(R.id.blueFragmentHolder, ssf, BLUE_FRAGMENT_TAG);
+          break;
+        case READY_TO_SUBMIT:
+          final NameAndScoreFragment f = NameAndScoreFragment.getInstance(Player.BLUE, _game.getBluePlayer(), _game.getBlueScore());
+          transaction.replace(R.id.blueFragmentHolder, f, BLUE_FRAGMENT_TAG);
+          break;
+      }
     }
 
     transaction.commit();
@@ -141,7 +147,7 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
         _blueState = State.NEED_SCORE;
         break;
     }
-    layoutAsPerState();
+    layoutAsPerState(player);
   }
 
   @Override
@@ -155,7 +161,7 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
         _game.setBlueScore(score);
         _blueState = State.READY_TO_SUBMIT;
     }
-    layoutAsPerState();
+    layoutAsPerState(player);
   }
 
   @Override
@@ -168,7 +174,7 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
         _blueState = State.NEED_NAME;
         break;
     }
-    layoutAsPerState();
+    layoutAsPerState(player);
   }
 
 }
