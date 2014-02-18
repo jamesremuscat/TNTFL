@@ -1,21 +1,15 @@
 package com.corefiling.tntfl;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import com.corefiling.tntfl.network.FullHttpAccessStrategy;
+import com.corefiling.tntfl.network.HttpAccessStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -83,45 +77,6 @@ public class TableFootballLadder {
     final String jsonResponse = _http.get(url);
 
     return SubmittedGame.fromJson(jsonResponse);
-  }
-
-  public static interface HttpAccessStrategy {
-    public String get(final String url) throws SubmissionException;
-  }
-
-  public static class FakeHttpAccessStrategy implements HttpAccessStrategy {
-
-    @Override
-    public String get(final String url) {
-      return "{\"red\":{\"name\":\"jrem\",\"score\":10},\"blue\":{\"name\":\"aks\",\"score\":0},\"skillChange\":{\"change\":11.38,\"towards\":\"red\"}}";
-    }
-
-  }
-
-  public static class FullHttpAccessStrategy implements HttpAccessStrategy {
-
-    @Override
-    public String get(final String url) throws SubmissionException {
-      final HttpClient httpclient = new DefaultHttpClient();
-      HttpResponse response;
-      try {
-        response = httpclient.execute(new HttpGet(url));
-        final StatusLine statusLine = response.getStatusLine();
-        if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-          final ByteArrayOutputStream out = new ByteArrayOutputStream();
-          response.getEntity().writeTo(out);
-          out.close();
-          return out.toString();
-        } else {
-          response.getEntity().getContent().close();
-          throw new SubmissionException(statusLine.getReasonPhrase());
-        }
-      }
-      catch (final IOException e) {
-        throw new SubmissionException(e);
-      }
-    }
-
   }
 
   public static class SubmissionException extends Exception {
