@@ -109,9 +109,15 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
         recreate();
       }
       else if (resultCode == RESULT_CANCELED) {
-        final Exception e = (Exception) data.getSerializableExtra("exception");
-        final Toast toast = Toast.makeText(this, "Could not submit game! Reason: " + e.getLocalizedMessage(), Toast.LENGTH_LONG);
-        toast.show();
+        if (data != null) {
+          final Exception e = (Exception) data.getSerializableExtra("exception");
+          final Toast toast = Toast.makeText(this, "Could not submit game! Reason: " + e.getLocalizedMessage(), Toast.LENGTH_LONG);
+          toast.show();
+        }
+        else {
+          final Toast toast = Toast.makeText(this, "Could not submit game! No reason was given, or you pressed Back too soon.", Toast.LENGTH_LONG);
+          toast.show();
+        }
       }
     }
   }
