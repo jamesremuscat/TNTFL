@@ -127,7 +127,7 @@ public class ScoreSubmissionFragment extends SingleLoaderAsyncFragment<Submissio
     public SubmissionResult loadInBackground() {
       final SubmissionResult result = new SubmissionResult();
       try {
-        result._game = TableFootballLadder.submitGame(_game);
+        result._game = TableFootballLadder.submitGame(getContext(), _game);
       }
       catch (final SubmissionException e) {
         result._exception = e;

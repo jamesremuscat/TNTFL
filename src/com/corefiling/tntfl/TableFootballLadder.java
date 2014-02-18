@@ -6,7 +6,10 @@ import java.util.List;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.wifi.WifiManager;
+import android.util.Log;
 
+import com.corefiling.tntfl.network.FakeHttpAccessStrategy;
 import com.corefiling.tntfl.network.FullHttpAccessStrategy;
 import com.corefiling.tntfl.network.HttpAccessStrategy;
 import com.google.gson.Gson;
@@ -50,17 +53,34 @@ public class TableFootballLadder {
 
   private static final String LADDER_SUBMIT_URL = "http://www.int.corefiling.com/~aks/football/football.cgi?jsonResponse=true&";
 
-  private static HttpAccessStrategy _http = new FullHttpAccessStrategy();
+  private static HttpAccessStrategy _http = null;
 
   public static void setHttpAccessStrategy(final HttpAccessStrategy strategy) {
     _http = strategy;
   }
 
-  private static HttpAccessStrategy getHttpAccessStrategy() {
+  private static HttpAccessStrategy getHttpAccessStrategy(final Context context) {
+
+    if (_http == null) {
+
+      final WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+      final String currentSSID = wm.getConnectionInfo().getSSID(); // Ick, this returns a string in double quotes
+
+      if (currentSSID != null && currentSSID.contains("cfl_staff")) {
+        _http = new FullHttpAccessStrategy();
+      }
+      else {
+        _http = new FakeHttpAccessStrategy();
+        Log.i("TableFootballLadder", "Not connected to a CoreFiling internal network, so cannot communicate with ladder. Using dummy HTTP access.");
+      }
+
+
+    }
+
     return _http;
   }
 
-  public static SubmittedGame submitGame(final Game game) throws SubmissionException {
+  public static SubmittedGame submitGame(final Context context, final Game game) throws SubmissionException {
 
     final StringBuilder urlBuilder = new StringBuilder(LADDER_SUBMIT_URL);
     urlBuilder.append("redplayer=");
@@ -77,7 +97,7 @@ public class TableFootballLadder {
 
     final String url = urlBuilder.toString();
 
-    final String jsonResponse = getHttpAccessStrategy().get(url);
+    final String jsonResponse = getHttpAccessStrategy(context).get(url);
 
     return SubmittedGame.fromJson(jsonResponse);
   }
