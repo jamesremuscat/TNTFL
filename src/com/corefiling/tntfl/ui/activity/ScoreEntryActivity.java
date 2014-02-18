@@ -112,7 +112,8 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
   protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
     if (requestCode == SCORE_SUBMISSION_REQUEST_CODE) {
       if (resultCode == RESULT_OK) {
-        recreate();
+        _redState = State.NEED_NAME;
+        _blueState = State.NEED_NAME;
       }
       else if (resultCode == RESULT_CANCELED) {
         if (data != null) {
@@ -126,6 +127,13 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
         }
       }
     }
+  }
+
+  @Override
+  protected void onPostResume() {
+    super.onPostResume();
+    layoutAsPerState(Player.RED);
+    layoutAsPerState(Player.BLUE);
   }
 
   private static enum State {
