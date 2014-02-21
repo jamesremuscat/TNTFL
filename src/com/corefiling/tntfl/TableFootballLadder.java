@@ -52,7 +52,12 @@ public class TableFootballLadder {
   }
 
   private static final String COREFILING_INTERNAL_WIFI_SSID = "cfl_staff";
-  private static final String LADDER_SUBMIT_URL = "http://www.int.corefiling.com/~aks/football/football.cgi?jsonResponse=true&";
+
+  private static final String LADDER_BASE_URL = "http://www.int.corefiling.com/~aks/football/";
+
+  private static final String LADDER_SUBMIT_URL = LADDER_BASE_URL + "football.cgi?jsonResponse=true&";
+  private static final String LADDER_REST_URL = LADDER_BASE_URL + "rest.cgi?";
+
 
   private static HttpAccessStrategy _http = null;
 
@@ -101,6 +106,17 @@ public class TableFootballLadder {
     final String jsonResponse = getHttpAccessStrategy(context).get(url);
 
     return SubmittedGame.fromJson(jsonResponse);
+  }
+
+  public static List<SubmittedGame> getRecentGames(final Context context) throws SubmissionException {
+    final String jsonResponse = getHttpAccessStrategy(context).get(LADDER_REST_URL + "mode=recent");
+
+    final GsonBuilder gb = new GsonBuilder();
+    gb.registerTypeAdapter(SubmittedGame.class, new SubmittedGame.SubmittedGameDeserializer());
+
+    final Gson g = gb.create();
+
+    return g.fromJson(jsonResponse, new TypeToken<List<SubmittedGame>>(){ /* */ }.getType());
   }
 
   public static class SubmissionException extends Exception {
