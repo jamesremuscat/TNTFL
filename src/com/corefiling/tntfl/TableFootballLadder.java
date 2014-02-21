@@ -105,7 +105,7 @@ public class TableFootballLadder {
 
     final String jsonResponse = getHttpAccessStrategy(context).get(url);
 
-    return SubmittedGame.fromJson(jsonResponse);
+    return SubmittedGame.fromJsonString(jsonResponse);
   }
 
   public static List<SubmittedGame> getRecentGames(final Context context) throws SubmissionException {

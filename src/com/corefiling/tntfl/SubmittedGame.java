@@ -35,7 +35,7 @@ public class SubmittedGame extends Game {
     _dateTime = dateTime;
   }
 
-  public static SubmittedGame fromJson(final String json) {
+  public static SubmittedGame fromJsonString(final String json) {
 
     final JsonParser p = new JsonParser();
     final JsonObject o = p.parse(json).getAsJsonObject();
