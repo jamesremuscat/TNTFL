@@ -61,9 +61,6 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
 
     layoutAsPerState(Player.RED);
     layoutAsPerState(Player.BLUE);
-
-    final View decorView = getWindow().getDecorView();
-    decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
   }
 
   @Override

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 
 import com.corefiling.tntfl.Game;
 import com.corefiling.tntfl.R;
@@ -29,9 +28,6 @@ public class ScoreSubmissionActivity extends FragmentActivity implements Dismiss
     transaction.add(R.id.fragmentHolder, ScoreSubmissionFragment.getInstance(game));
 
     transaction.commit();
-
-    final View decorView = getWindow().getDecorView();
-    decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
   }
 
   @Override
