@@ -36,11 +36,15 @@ public class SubmittedGame extends Game {
   }
 
   public static SubmittedGame fromJson(final String json) {
-    final SubmittedGame g = new SubmittedGame();
 
     final JsonParser p = new JsonParser();
     final JsonObject o = p.parse(json).getAsJsonObject();
 
+    return fromJsonObject(o);
+  }
+
+  protected static SubmittedGame fromJsonObject(final JsonObject o) {
+    final SubmittedGame g = new SubmittedGame();
     final JsonObject redPlayer = o.get("red").getAsJsonObject();
     g.setRedPlayer(redPlayer.get("name").getAsString());
     g.setRedScore(redPlayer.get("score").getAsInt());
@@ -83,7 +87,7 @@ public class SubmittedGame extends Game {
   public static class SubmittedGameDeserializer implements JsonDeserializer<SubmittedGame> {
     @Override
     public SubmittedGame deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException {
-      return SubmittedGame.fromJson(json.getAsJsonPrimitive().getAsString());
+      return SubmittedGame.fromJsonObject(json.getAsJsonObject());
     }
 
   }
