@@ -1,8 +1,13 @@
 package com.corefiling.tntfl;
 
+import java.lang.reflect.Type;
 import java.util.Date;
 
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 
 public class SubmittedGame extends Game {
@@ -73,6 +78,14 @@ public class SubmittedGame extends Game {
     g.setDateTime(new Date());
 
     return g;
+  }
+
+  public static class SubmittedGameDeserializer implements JsonDeserializer<SubmittedGame> {
+    @Override
+    public SubmittedGame deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException {
+      return SubmittedGame.fromJson(json.getAsJsonPrimitive().getAsString());
+    }
+
   }
 
 }
