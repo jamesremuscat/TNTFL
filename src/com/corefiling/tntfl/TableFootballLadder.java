@@ -65,7 +65,7 @@ public class TableFootballLadder {
     _http = strategy;
   }
 
-  private static HttpAccessStrategy getHttpAccessStrategy(final Context context) {
+  static HttpAccessStrategy getHttpAccessStrategy(final Context context) {
 
     if (_http == null) {
 
