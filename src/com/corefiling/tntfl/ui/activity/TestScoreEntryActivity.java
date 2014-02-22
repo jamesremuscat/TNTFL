@@ -76,6 +76,7 @@ public class TestScoreEntryActivity extends ActivityInstrumentationTestCase2<Sco
   }
 
   private void focus(final View v) {
+    assertNotNull(v);
     getActivity().runOnUiThread(new Runnable() {
       @Override
       public void run() {
@@ -86,6 +87,7 @@ public class TestScoreEntryActivity extends ActivityInstrumentationTestCase2<Sco
   }
 
   private void click(final View v) {
+    assertNotNull(v);
     getActivity().runOnUiThread(new Runnable() {
       @Override
       public void run() {
