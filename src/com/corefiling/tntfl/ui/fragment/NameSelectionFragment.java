@@ -1,6 +1,7 @@
 package com.corefiling.tntfl.ui.fragment;
 
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
@@ -50,7 +51,7 @@ public class NameSelectionFragment extends Fragment {
       @Override
       public void onClick(final View v) {
         final EditText txtName = (EditText) view.findViewById(R.id.txtName);
-        final String playerName = txtName.getText().toString();
+        final String playerName = txtName.getText().toString().toLowerCase(Locale.ENGLISH);
 
         if (!playerName.isEmpty()) {
           final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
