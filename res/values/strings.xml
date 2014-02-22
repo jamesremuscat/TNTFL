@@ -14,5 +14,6 @@
   <string name="score_separator">-</string>
   <string name="enterNewGame">Enter New Game</string>
   <string name="recentGames">Recent Games</string>
+  <string name="back">Back</string>
 
 </resources>

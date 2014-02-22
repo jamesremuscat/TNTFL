@@ -48,6 +48,14 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
       }
     });
 
+    ((Button) findViewById(R.id.btnBack)).setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(final View v) {
+        setResult(RESULT_OK);
+        finish();
+      }
+    });
+
     //    TODO: This code works, but exposes the fact that all the child fragments lose their state when you change orientation etc.
     //    Fix the child fragments before uncommenting this!
     //    if (savedInstanceState != null) {
@@ -126,8 +134,9 @@ public class ScoreEntryActivity extends FragmentActivity implements NameReceiver
   protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
     if (requestCode == SCORE_SUBMISSION_REQUEST_CODE) {
       if (resultCode == RESULT_OK) {
-        _redState = State.NEED_NAME;
-        _blueState = State.NEED_NAME;
+        // Propagate the finishing to return to the main screen
+        setResult(RESULT_OK);
+        finish();
       }
       else if (resultCode == RESULT_CANCELED) {
         if (data != null) {
