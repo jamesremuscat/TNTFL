@@ -8,10 +8,18 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
+import org.mockito.Mockito;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.test.InstrumentationTestCase;
+
+import com.corefiling.tntfl.network.FakeHttpAccessStrategy;
+import com.corefiling.tntfl.network.FullHttpAccessStrategy;
+import com.corefiling.tntfl.network.HttpAccessStrategy;
 
 public class TestTableFootballLadder extends InstrumentationTestCase {
 
@@ -50,6 +58,46 @@ public class TestTableFootballLadder extends InstrumentationTestCase {
     assertEquals(2, recentPlayers.size());
     assertEquals("testPlayer1", recentPlayers.get(0));
     assertEquals("testPlayer2", recentPlayers.get(1));
+  }
+
+  public void testGetHttpConnections() throws Exception {
+    final Context mockContext = mock(Context.class);
+    final WifiManager mockWM = mock(WifiManager.class);
+    final WifiInfo mockWI = mock(WifiInfo.class);
+
+    when(mockContext.getSystemService(Context.WIFI_SERVICE)).thenReturn(mockWM);
+    when(mockWM.getConnectionInfo()).thenReturn(mockWI);
+
+    when(mockWI.getSSID()).thenReturn("cfl_staff", "some_other_network", "cfl_staff_bmr");
+    final HttpAccessStrategy cflStaffStrategy = TableFootballLadder.getHttpAccessStrategy(mockContext);
+    assertEquals(FullHttpAccessStrategy.class, cflStaffStrategy.getClass());
+    TableFootballLadder.setHttpAccessStrategy(null);
+
+    final HttpAccessStrategy someOtherStrategy = TableFootballLadder.getHttpAccessStrategy(mockContext);
+    assertEquals(FakeHttpAccessStrategy.class, someOtherStrategy.getClass());
+    TableFootballLadder.setHttpAccessStrategy(null);
+
+    final HttpAccessStrategy cflStaffBMRStrategy = TableFootballLadder.getHttpAccessStrategy(mockContext);
+    assertEquals(FullHttpAccessStrategy.class, cflStaffBMRStrategy.getClass());
+  }
+
+  public void testSubmitGame() throws Exception {
+    final Context mockContext = mock(Context.class);
+    final HttpAccessStrategy http = mock(HttpAccessStrategy.class);
+    TableFootballLadder.setHttpAccessStrategy(http);
+
+    when(http.get(anyString())).thenReturn(JsonDataTestUtils.sampleDataAsString(getClass(), "submittedGame.json"));
+
+    final Game g = new Game();
+    g.setBluePlayer("bluePlayer");
+    g.setBlueScore(3);
+    g.setRedPlayer("redPlayer");
+    g.setRedScore(7);
+
+    TableFootballLadder.submitGame(mockContext, g);
+
+    verify(http).get("http://www.int.corefiling.com/~aks/football/football.cgi?jsonResponse=true&redplayer=redPlayer&redscore=7&blueplayer=bluePlayer&bluescore=3");
+    Mockito.verifyZeroInteractions(mockContext);
   }
 
 }
