@@ -12,5 +12,7 @@
   <string name="submit">Submit Game</string>
   <string name="skill">Skill Change</string>
   <string name="score_separator">-</string>
+  <string name="enterNewGame">Enter New Game</string>
+  <string name="recentGames">Recent Games</string>
 
 </resources>
