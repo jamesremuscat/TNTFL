@@ -100,4 +100,28 @@ public class TestTableFootballLadder extends InstrumentationTestCase {
     Mockito.verifyZeroInteractions(mockContext);
   }
 
+  public void testGetRecentGames() throws Exception {
+    final Context mockContext = mock(Context.class);
+    final HttpAccessStrategy http = mock(HttpAccessStrategy.class);
+    TableFootballLadder.setHttpAccessStrategy(http);
+
+    when(http.get(anyString())).thenReturn(JsonDataTestUtils.sampleDataAsString(getClass(), "recentGames.json"));
+
+    final List<SubmittedGame> recentGames = TableFootballLadder.getRecentGames(mockContext);
+
+    verify(http).get("http://www.int.corefiling.com/~aks/football/rest.cgi?mode=recent");
+    Mockito.verifyZeroInteractions(mockContext);
+
+    assertEquals(5, recentGames.size());
+
+    final SubmittedGame g = recentGames.get(3);
+
+    assertEquals("gjhw", g.getRedPlayer());
+    assertEquals(3, g.getRedScore());
+    assertEquals("eu", g.getBluePlayer());
+    assertEquals(7, g.getBlueScore());
+    assertEquals(1.4787261566, g.getSkillChange(), 0.000001);
+    assertEquals(Player.BLUE, g.getSkillChangeDirection());
+  }
+
 }

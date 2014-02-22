@@ -1,0 +1,71 @@
+[
+  {
+    "red" : {
+      "name" : "jrem",
+      "score" : 7,
+      "skillChange" : 2.14038192979
+    },
+    "blue" : {
+      "name" : "esm",
+      "score" : 3,
+      "skillChange" : -2.14038192979
+    },
+    "date" : 1392928777
+  },
+  
+  {
+    "red" : {
+      "name" : "jrem",
+      "score" : 5,
+      "skillChange" : -0.138448118581
+    },
+    "blue" : {
+      "name" : "cjm",
+      "score" : 5,
+      "skillChange" : 0.138448118581
+    },
+    "date" : 1392915957
+  },
+  
+  {
+    "red" : {
+      "name" : "ndt",
+      "score" : 10,
+      "skillChange" : 8.69557627257
+    },
+    "blue" : {
+      "name" : "bjsd",
+      "score" : 0,
+      "skillChange" : -8.69557627257
+    },
+    "date" : 1392911453
+  },
+  
+  {
+    "red" : {
+      "name" : "gjhw",
+      "score" : 3,
+      "skillChange" : -1.4787261566
+    },
+    "blue" : {
+      "name" : "eu",
+      "score" : 7,
+      "skillChange" : 1.4787261566
+    },
+    "date" : 1392910835
+  },
+  
+  {
+    "red" : {
+      "name" : "prc",
+      "score" : 2,
+      "skillChange" : -7.99428687603
+    },
+    "blue" : {
+      "name" : "gjhw",
+      "score" : 8,
+      "skillChange" : 7.99428687603
+    },
+    "date" : 1392910448
+  }
+]
