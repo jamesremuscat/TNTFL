@@ -2,12 +2,15 @@ package com.corefiling.tntfl.ui.activity;
 
 import java.util.Locale;
 
+import android.app.Activity;
+import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.corefiling.tntfl.Game;
 import com.corefiling.tntfl.R;
 import com.corefiling.tntfl.TableFootballLadder;
 import com.corefiling.tntfl.network.FakeHttpAccessStrategy;
@@ -59,6 +62,16 @@ public class TestScoreEntryActivity extends ActivityInstrumentationTestCase2<Sco
     final Button btnSubmit = (Button) activity.findViewById(R.id.btnSubmit);
     assertEquals(View.VISIBLE, btnSubmit.getVisibility());
     click(btnSubmit);
+
+    final ActivityMonitor monitor = getInstrumentation().addMonitor(ScoreSubmissionActivity.class.getName(), null, false);
+    final Activity ssa = getInstrumentation().waitForMonitor(monitor);
+
+    final Game parcelledGame = ssa.getIntent().getParcelableExtra(ScoreSubmissionActivity.BUNDLE_GAME_KEY);
+
+    assertEquals("jrem", parcelledGame.getRedPlayer());
+    assertEquals("aks", parcelledGame.getBluePlayer());
+    assertEquals(4, parcelledGame.getRedScore());
+    assertEquals(6, parcelledGame.getBlueScore());
 
   }
 
