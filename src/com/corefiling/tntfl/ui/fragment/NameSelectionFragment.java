@@ -44,7 +44,7 @@ public class NameSelectionFragment extends Fragment {
   public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
     final View view = inflater.inflate(R.layout.fragment_name_selection, container, false);
 
-    final Button btnOK = (Button) view.findViewById(R.id.button1);
+    final Button btnOK = (Button) view.findViewById(R.id.btnOK);
     btnOK.setOnClickListener(new OnClickListener() {
 
       @Override
