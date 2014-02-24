@@ -46,7 +46,7 @@ public class RecentGameView extends LinearLayout {
     ((TextView) findViewById(R.id.txtDate)).setText(dateFormat.format(game.getDateTime()));
 
     final TextView txtSkillChange = (TextView) findViewById(R.id.txtSkillChange);
-    txtSkillChange.setText(String.format("%.3f", game.getSkillChange()));
+    txtSkillChange.setText(String.format("%s: %.3f", getResources().getString(R.string.skill), game.getSkillChange()));
 
     if (game.getSkillChangeDirection() == Player.RED) {
       txtSkillChange.setBackgroundResource(R.drawable.red_gradient);
