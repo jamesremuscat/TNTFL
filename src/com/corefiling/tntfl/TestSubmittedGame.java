@@ -2,6 +2,7 @@ package com.corefiling.tntfl;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import junit.framework.TestCase;
 
@@ -54,9 +55,9 @@ public class TestSubmittedGame extends TestCase {
     assertEquals(0.138448118581f, game.getSkillChange(), 0.000001);
     assertEquals(Player.BLUE, game.getSkillChangeDirection());
 
-    final DateFormat df = SimpleDateFormat.getDateTimeInstance();
+    final DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 
-    assertEquals("Feb 20, 2014 5:05:57 PM", df.format(game.getDateTime()));
+    assertEquals("2014-02-20 17:05:57", df.format(game.getDateTime()));
   }
 
 }
