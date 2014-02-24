@@ -79,7 +79,13 @@ public class SubmittedGame extends Game {
 
     }
 
-    g.setDateTime(new Date());
+    if (o.has("date")) {
+      g.setDateTime(new Date(o.get("date").getAsLong() * 1000));
+    }
+    else {
+      g.setDateTime(new Date());
+    }
+
 
     return g;
   }
