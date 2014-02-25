@@ -10,14 +10,13 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.corefiling.tntfl.SubmittedGame;
 import com.corefiling.tntfl.TableFootballLadder;
 import com.corefiling.tntfl.TableFootballLadder.SubmissionException;
 import com.corefiling.tntfl.ui.view.RecentGameView;
+import com.corefiling.tntfl.ui.view.ScrollingListView;
 
 public class RecentGamesFragment extends SingleLoaderAsyncFragment<List<SubmittedGame>> {
 
@@ -76,51 +75,6 @@ public class RecentGamesFragment extends SingleLoaderAsyncFragment<List<Submitte
       }
     }
 
-
-  }
-
-  private static class ScrollingListView extends ListView {
-
-    private static final int SCROLL_TIME_IN_MILLIS = 15000;
-
-    public ScrollingListView(final Context context) {
-      super(context);
-
-      setOnScrollListener(new OnScrollListener() {
-
-        @Override
-        public void onScrollStateChanged(final AbsListView view, final int scrollState) {
-          // Nothing to do here
-        }
-
-        @Override
-        public void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount, final int totalItemCount) {
-          if (firstVisibleItem + visibleItemCount == totalItemCount) {
-            post(new Runnable() {
-              @Override
-              public void run() {
-                smoothScrollToPositionFromTop(0, 0, SCROLL_TIME_IN_MILLIS);
-              }
-            });
-          } else if (firstVisibleItem == 0) {
-            final int currentOffset   = view.getChildAt(0).getTop();
-            if (currentOffset == 0) {
-              startScrolling();
-            }
-          }
-        }
-      });
-
-    }
-
-    public void startScrolling() {
-      post(new Runnable() {
-        @Override
-        public void run() {
-          smoothScrollToPositionFromTop(getAdapter().getCount() - 1, -100, SCROLL_TIME_IN_MILLIS);
-        }
-      });
-    }
 
   }
 
