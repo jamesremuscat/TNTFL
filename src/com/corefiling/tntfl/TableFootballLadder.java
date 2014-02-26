@@ -119,6 +119,15 @@ public class TableFootballLadder {
     return g.fromJson(jsonResponse, new TypeToken<List<SubmittedGame>>(){ /* */ }.getType());
   }
 
+  public static List<PlayerStats> getLadder(final Context context) throws SubmissionException {
+    final String jsonResponse = getHttpAccessStrategy(context).get(LADDER_REST_URL + "mode=ladder");
+    final GsonBuilder gb = new GsonBuilder();
+    gb.registerTypeAdapter(PlayerStats.class, new PlayerStats.PlayerStatsDeserializer());
+    final Gson g = gb.create();
+
+    return g.fromJson(jsonResponse, new TypeToken<List<PlayerStats>>() { /* */ }.getType());
+  }
+
   public static class SubmissionException extends Exception {
 
     private static final long serialVersionUID = 2244020040887984376L;
