@@ -15,5 +15,6 @@
   <string name="enterNewGame">Enter New Game</string>
   <string name="recentGames">Recent Games</string>
   <string name="back">Back</string>
+  <string name="ladder">Ladder</string>
 
 </resources>
