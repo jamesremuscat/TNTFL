@@ -1,0 +1,219 @@
+
+[
+{ "name":"plega",
+"total":{ "for":6990.0, "against":6800.0, "games":1399.0 },
+"gamesToday":0.0,
+"skill":75.4809053873,
+"weaselFactor":689.96063739
+}
+,
+{ "name":"neg",
+"total":{ "for":2000.0, "against":2350.0, "games":435.0 },
+"gamesToday":0.0,
+"skill":64.7577655753,
+"weaselFactor":20.9640058033
+}
+,
+{ "name":"mrg",
+"total":{ "for":4537.0, "against":4280.0, "games":894.0 },
+"gamesToday":0.0,
+"skill":56.8937909318,
+"weaselFactor":404.157420022
+}
+,
+{ "name":"jrem",
+"total":{ "for":3311.0, "against":2812.0, "games":609.0 },
+"gamesToday":3.0,
+"skill":47.9083787456,
+"weaselFactor":-151.767225092
+}
+,
+{ "name":"cjm",
+"total":{ "for":93.0, "against":57.0, "games":15.0 },
+"gamesToday":0.0,
+"skill":44.3131573242,
+"weaselFactor":32.8385147761
+}
+,
+{ "name":"ndt",
+"total":{ "for":76.0, "against":24.0, "games":10.0 },
+"gamesToday":0.0,
+"skill":42.5619365574,
+"weaselFactor":6.14350959655
+}
+,
+{ "name":"mth",
+"total":{ "for":2642.0, "against":2761.0, "games":556.0 },
+"gamesToday":0.0,
+"skill":40.3361811704,
+"weaselFactor":214.223677224
+}
+,
+{ "name":"njlgad",
+"total":{ "for":2062.0, "against":1688.0, "games":375.0 },
+"gamesToday":0.0,
+"skill":38.6591191423,
+"weaselFactor":182.493559266
+}
+,
+{ "name":"jjf",
+"total":{ "for":1961.0, "against":1541.0, "games":350.0 },
+"gamesToday":0.0,
+"skill":31.3315730692,
+"weaselFactor":187.607126704
+}
+,
+{ "name":"eu",
+"total":{ "for":216.0, "against":184.0, "games":40.0 },
+"gamesToday":0.0,
+"skill":9.97193853354,
+"weaselFactor":41.5890556066
+}
+,
+{ "name":"aks",
+"total":{ "for":2423.0, "against":2044.0, "games":447.0 },
+"gamesToday":0.0,
+"skill":9.6378616968,
+"weaselFactor":246.914473949
+}
+,
+{ "name":"msww",
+"total":{ "for":1797.0, "against":2197.0, "games":399.0 },
+"gamesToday":0.0,
+"skill":8.73418783189,
+"weaselFactor":54.8039934821
+}
+,
+{ "name":"esm",
+"total":{ "for":2276.0, "against":2144.0, "games":439.0 },
+"gamesToday":0.0,
+"skill":7.21610307291,
+"weaselFactor":363.362497393
+}
+,
+{ "name":"rna",
+"total":{ "for":238.0, "against":332.0, "games":57.0 },
+"gamesToday":0.0,
+"skill":4.88966832795,
+"weaselFactor":92.9400139053
+}
+,
+{ "name":"cps",
+"total":{ "for":789.0, "against":953.0, "games":179.0 },
+"gamesToday":0.0,
+"skill":4.558297808,
+"weaselFactor":141.152412245
+}
+,
+{ "name":"jsv",
+"total":{ "for":2452.0, "against":2598.0, "games":505.0 },
+"gamesToday":0.0,
+"skill":3.21430321423,
+"weaselFactor":71.0949045933
+}
+,
+{ "name":"dsb",
+"total":{ "for":2.0, "against":8.0, "games":1.0 },
+"gamesToday":0.0,
+"skill":-6.31664907117,
+"weaselFactor":7.41241525848
+}
+,
+{ "name":"sam",
+"total":{ "for":1.0, "against":9.0, "games":1.0 },
+"gamesToday":0.0,
+"skill":-10.0,
+"weaselFactor":-28.7450537892
+}
+,
+{ "name":"ma",
+"total":{ "for":32.0, "against":58.0, "games":9.0 },
+"gamesToday":0.0,
+"skill":-13.6278045986,
+"weaselFactor":4.76791848163
+}
+,
+{ "name":"src",
+"total":{ "for":1240.0, "against":1592.0, "games":283.0 },
+"gamesToday":0.0,
+"skill":-20.0359122757,
+"weaselFactor":123.093564862
+}
+,
+{ "name":"bjsd",
+"total":{ "for":8.0, "against":32.0, "games":4.0 },
+"gamesToday":0.0,
+"skill":-23.9704912239,
+"weaselFactor":1.12552850274
+}
+,
+{ "name":"hjk",
+"total":{ "for":1.0, "against":29.0, "games":3.0 },
+"gamesToday":0.0,
+"skill":-24.514411768,
+"weaselFactor":2.55001452811
+}
+,
+{ "name":"mlb",
+"total":{ "for":29.0, "against":61.0, "games":9.0 },
+"gamesToday":0.0,
+"skill":-29.8271227599,
+"weaselFactor":-14.9923794091
+}
+,
+{ "name":"swhite",
+"total":{ "for":9.0, "against":32.0, "games":5.0 },
+"gamesToday":0.0,
+"skill":-30.6237317318,
+"weaselFactor":17.376629429
+}
+,
+{ "name":"aw",
+"total":{ "for":2.0, "against":38.0, "games":4.0 },
+"gamesToday":0.0,
+"skill":-34.7983048611,
+"weaselFactor":8.14469477342
+}
+,
+{ "name":"gjhw",
+"total":{ "for":2624.0, "against":3139.0, "games":576.0 },
+"gamesToday":0.0,
+"skill":-38.2523309299,
+"weaselFactor":155.532106779
+}
+,
+{ "name":"tmm",
+"total":{ "for":369.0, "against":731.0, "games":110.0 },
+"gamesToday":0.0,
+"skill":-44.8063383103,
+"weaselFactor":-85.1682929767
+}
+,
+{ "name":"kmn",
+"total":{ "for":193.0, "against":447.0, "games":64.0 },
+"gamesToday":0.0,
+"skill":-45.194962315,
+"weaselFactor":66.2779253717
+}
+,
+{ "name":"prc",
+"total":{ "for":15.0, "against":65.0, "games":8.0 },
+"gamesToday":0.0,
+"skill":-46.5765705417,
+"weaselFactor":-24.4276178238
+}
+,
+{ "name":"strr",
+"total":{ "for":18.0, "against":122.0, "games":14.0 },
+"gamesToday":0.0,
+"skill":-72.4033755303,
+"weaselFactor":30.0407998952
+}
+,
+{ "name":"pdd",
+"total":{ "for":71.0, "against":280.0, "games":36.0 },
+"gamesToday":0.0,
+"skill":-91.2996793478,
+"weaselFactor":63.7244630204
+}
+]

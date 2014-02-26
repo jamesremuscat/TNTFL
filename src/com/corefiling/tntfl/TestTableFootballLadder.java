@@ -124,4 +124,33 @@ public class TestTableFootballLadder extends InstrumentationTestCase {
     assertEquals(Player.BLUE, g.getSkillChangeDirection());
   }
 
+  public void testGetLadder() throws Exception {
+    final Context mockContext = mock(Context.class);
+    final HttpAccessStrategy http = mock(HttpAccessStrategy.class);
+    TableFootballLadder.setHttpAccessStrategy(http);
+
+    when(http.get(anyString())).thenReturn(JsonDataTestUtils.sampleDataAsString(getClass(), "ladder.json"));
+
+    final List<PlayerStats> ladder = TableFootballLadder.getLadder(mockContext);
+
+    verify(http).get("http://www.int.corefiling.com/~aks/football/rest.cgi?mode=ladder");
+    Mockito.verifyZeroInteractions(mockContext);
+
+    assertEquals(31, ladder.size());
+
+    final PlayerStats topPlayer = ladder.get(0);
+    assertEquals("plega", topPlayer.getName()); // If this invariant is ever violated the company may cease trading
+    assertEquals(75.4809053873, topPlayer.getSkill(), 0.0000000001);
+    assertEquals(689.96063739, topPlayer.getWeaselFactor(), 0.00000001);
+    assertEquals(6990, topPlayer.getFor());
+    assertEquals(6800, topPlayer.getAgainst());
+    assertEquals(1399, topPlayer.getTotalGames());
+    assertEquals(0, topPlayer.getGamesToday());
+
+    final PlayerStats jrem = ladder.get(3);
+    assertEquals("jrem", jrem.getName());
+    assertEquals(3, jrem.getGamesToday());
+
+  }
+
 }
