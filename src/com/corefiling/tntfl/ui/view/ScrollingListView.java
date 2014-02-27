@@ -6,7 +6,7 @@ import android.widget.ListView;
 
 public class ScrollingListView extends ListView {
 
-  private static final int SCROLL_TIME_IN_MILLIS = 15000;
+  private static final int SCROLL_TIME_IN_MILLIS_PER_ITEM = 1500;
 
   public ScrollingListView(final Context context) {
     super(context);
@@ -24,7 +24,7 @@ public class ScrollingListView extends ListView {
           post(new Runnable() {
             @Override
             public void run() {
-              smoothScrollToPositionFromTop(0, 0, SCROLL_TIME_IN_MILLIS);
+              smoothScrollToPositionFromTop(0, 0, SCROLL_TIME_IN_MILLIS_PER_ITEM * totalItemCount);
             }
           });
         } else if (firstVisibleItem == 0) {
@@ -42,7 +42,8 @@ public class ScrollingListView extends ListView {
     post(new Runnable() {
       @Override
       public void run() {
-        smoothScrollToPositionFromTop(getAdapter().getCount() - 1, -100, SCROLL_TIME_IN_MILLIS);
+        final int count = getAdapter().getCount();
+        smoothScrollToPositionFromTop(count - 1, -100, SCROLL_TIME_IN_MILLIS_PER_ITEM * count);
       }
     });
   }
