@@ -11,16 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.corefiling.tntfl.PlayerStats;
 import com.corefiling.tntfl.TableFootballLadder;
 import com.corefiling.tntfl.TableFootballLadder.SubmissionException;
 import com.corefiling.tntfl.ui.view.PlayerStatsView;
-import com.corefiling.tntfl.ui.view.ScrollingListView;
 
 public class LadderFragment extends SingleLoaderAsyncFragment<List<PlayerStats>> {
 
-  private ScrollingListView _listView;
+  private ListView _listView;
 
   @Override
   public Loader<List<PlayerStats>> onCreateLoader(final int arg0, final Bundle arg1) {
@@ -31,12 +31,11 @@ public class LadderFragment extends SingleLoaderAsyncFragment<List<PlayerStats>>
   public void onLoadFinished(final Loader<List<PlayerStats>> arg0, final List<PlayerStats> games) {
     _listView.setAdapter(new RecentGamesListAdapter(getActivity(), games));
     setContentShown(true);
-    _listView.startScrolling();
   }
 
   @Override
   protected View onCreateViewInternal(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-    _listView = new ScrollingListView(getActivity());
+    _listView = new ListView(getActivity());
     return _listView;
   }
 
