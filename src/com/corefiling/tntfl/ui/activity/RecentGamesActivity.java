@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.corefiling.tntfl.R;
+import com.corefiling.tntfl.ui.fragment.LadderFragment;
 import com.corefiling.tntfl.ui.fragment.RecentGamesFragment;
 
 public class RecentGamesActivity extends FragmentActivity {
@@ -42,7 +43,8 @@ public class RecentGamesActivity extends FragmentActivity {
     final FragmentManager fm = getSupportFragmentManager();
     final FragmentTransaction transaction = fm.beginTransaction();
 
-    transaction.replace(R.id.fragmentHolder, new RecentGamesFragment());
+    transaction.replace(R.id.fragmentHolderLeft, new LadderFragment());
+    transaction.replace(R.id.fragmentHolderRight, new RecentGamesFragment());
 
     transaction.commit();
   }
