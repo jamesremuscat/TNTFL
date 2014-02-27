@@ -27,7 +27,7 @@ public class ScrollingListView extends ListView {
           //          Log.d("Scrolly", "Last item top is " + lastVisibleItem.getTop());
           //          Log.d("Scrolly", "Last item bottom is " + lastVisibleItem.getBottom());
           //          Log.d("Scrolly", "View height is " + view.getHeight());
-          if (lastVisibleItem.getBottom() == view.getHeight()) {
+          if (lastVisibleItem.getBottom() - view.getHeight() < 10) {
             postDelayed(new Runnable() {
               @Override
               public void run() {
