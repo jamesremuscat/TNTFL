@@ -5,17 +5,34 @@
 
   <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:layout_above="@+id/btnEnterGame" android:layout_centerHorizontal="true" android:baselineAligned="false">
 
-    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp" >
 
       <TextView android:id="@+id/TextView01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:gravity="center_horizontal" android:text="@string/ladder" android:textAppearance="?android:attr/textAppearanceLarge" android:textSize="@dimen/big_font_size" />
       <LinearLayout android:id="@+id/fragmentHolderLeft" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical"></LinearLayout>
     </LinearLayout>
 
-    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp" >
 
       <TextView android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:gravity="center_horizontal" android:text="@string/recentGames" android:textAppearance="?android:attr/textAppearanceLarge" android:textSize="@dimen/big_font_size" />
 
-      <LinearLayout android:id="@+id/fragmentHolderRight" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
+      <LinearLayout
+          android:id="@+id/fragmentHolderRight"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical" >
+
       </LinearLayout>
     </LinearLayout>
   </LinearLayout>
