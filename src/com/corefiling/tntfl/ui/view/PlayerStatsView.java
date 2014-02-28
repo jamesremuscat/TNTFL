@@ -34,6 +34,9 @@ public class PlayerStatsView extends LinearLayout {
     if (ranking == 1) {
       txtRanking.setBackgroundDrawable(getResources().getDrawable(R.drawable.red_gradient));
     }
+    else {
+      txtRanking.setBackgroundDrawable(getResources().getDrawable(R.drawable.blue_gradient));
+    }
   }
 
   public void setPlayerStats(final PlayerStats playerStats) {

@@ -48,6 +48,12 @@ public class LadderFragment extends SingleLoaderAsyncFragment<List<PlayerStats>>
     @Override
     public View getView(final int position, final View convertView, final ViewGroup parent) {
       final PlayerStats ps = getItem(position);
+      if (convertView instanceof PlayerStatsView) {
+        final PlayerStatsView psv = (PlayerStatsView) convertView;
+        psv.setPlayerStats(ps);
+        psv.setRanking(position + 1);
+        return psv;
+      }
       return new PlayerStatsView(getContext(), position + 1, ps);
     }
 
