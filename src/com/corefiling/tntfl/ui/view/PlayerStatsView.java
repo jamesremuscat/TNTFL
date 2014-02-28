@@ -44,7 +44,7 @@ public class PlayerStatsView extends LinearLayout {
     txtPlayerName.setText(playerStats.getName());
 
     final TextView txtSkill = (TextView) findViewById(R.id.txtSkill);
-    txtSkill.setText(String.format("%s: %.3f", getResources().getString(R.string.skill), playerStats.getSkill()));
+    txtSkill.setText(String.format("%.3f", playerStats.getSkill()));
 
   }
 
