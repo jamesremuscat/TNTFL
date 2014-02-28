@@ -59,6 +59,9 @@ public class RecentGameView extends LinearLayout {
       final Drawable yellowStripe = new GradientDrawable((game.getRedScore() == 10) ? Orientation.LEFT_RIGHT : Orientation.RIGHT_LEFT, new int[] {Color.YELLOW, Color.BLACK});
       findViewById(R.id.scoresBox).setBackgroundDrawable(yellowStripe);
     }
+    else {
+      findViewById(R.id.scoresBox).setBackgroundDrawable(getResources().getDrawable(R.drawable.red_blue_gradient));
+    }
   }
 
 }

@@ -49,6 +49,10 @@ public class RecentGamesFragment extends SingleLoaderAsyncFragment<List<Submitte
     @Override
     public View getView(final int position, final View convertView, final ViewGroup parent) {
       final SubmittedGame game = getItem(position);
+      if (convertView instanceof RecentGameView) {
+        ((RecentGameView) convertView).setGame(game);
+        return convertView;
+      }
       return new RecentGameView(getContext(), game);
     }
 
