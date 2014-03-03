@@ -1,6 +1,8 @@
 package com.corefiling.tntfl.ui.view;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import android.content.Context;
@@ -41,9 +43,7 @@ public class RecentGameView extends LinearLayout {
     ((TextView) findViewById(R.id.txtRedName)).setText(game.getRedPlayer());
     ((TextView) findViewById(R.id.txtRedScore)).setText(Integer.toString(game.getRedScore()));
 
-    final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM HH:mm", Locale.ENGLISH);
-
-    ((TextView) findViewById(R.id.txtDate)).setText(dateFormat.format(game.getDateTime()));
+    ((TextView) findViewById(R.id.txtDate)).setText(GameDateFormatter.format(game.getDateTime()));
 
     final TextView txtSkillChange = (TextView) findViewById(R.id.txtSkillChange);
     txtSkillChange.setText(String.format("%s: %.3f", getResources().getString(R.string.skill_change), game.getSkillChange()));
@@ -62,6 +62,38 @@ public class RecentGameView extends LinearLayout {
     else {
       findViewById(R.id.scoresBox).setBackgroundDrawable(getResources().getDrawable(R.drawable.red_blue_gradient));
     }
+  }
+
+  static class GameDateFormatter {
+
+    private static final SimpleDateFormat SHORT_DATE_FORMAT = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
+    private static final SimpleDateFormat THIS_WEEK_DATE_FORMAT = new SimpleDateFormat("E HH:mm", Locale.ENGLISH);
+    private static final SimpleDateFormat LONG_DATE_FORMAT = new SimpleDateFormat("dd/MM HH:mm", Locale.ENGLISH);
+
+    public static String format(final Date date) {
+
+      final Calendar c = Calendar.getInstance();
+
+      // set the calendar to start of today
+      c.set(Calendar.HOUR, 0);
+      c.set(Calendar.MINUTE, 0);
+      c.set(Calendar.SECOND, 0);
+
+      if (date.after(c.getTime())) {
+        // today
+        return SHORT_DATE_FORMAT.format(date);
+      }
+      else {
+        c.add(Calendar.DATE, -6);
+        if (date.after(c.getTime())) {
+          // in the last week
+          return THIS_WEEK_DATE_FORMAT.format(date);
+        }
+      }
+      return LONG_DATE_FORMAT.format(date);
+
+    }
+
   }
 
 }
