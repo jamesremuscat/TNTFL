@@ -19,9 +19,9 @@ public class TestRecentGameView extends TestCase {
     c.add(Calendar.DATE, -5); // 6 days ago
     assertTrue(GameDateFormatter.format(c.getTime()).matches("[A-Za-z]{3} [0-9]{2}:[0-9]{2}"));
     c.add(Calendar.DATE, -1); // 7 days ago
-    assertTrue(GameDateFormatter.format(c.getTime()).matches("[0-9]{2}/[0-9]{2} [0-9]{2}:[0-9]{2}"));
+    assertTrue(GameDateFormatter.format(c.getTime()).matches("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}"));
     c.add(Calendar.DATE, -1); // 8 days ago
-    assertTrue(GameDateFormatter.format(c.getTime()).matches("[0-9]{2}/[0-9]{2} [0-9]{2}:[0-9]{2}"));
+    assertTrue(GameDateFormatter.format(c.getTime()).matches("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}"));
   }
 
 }
