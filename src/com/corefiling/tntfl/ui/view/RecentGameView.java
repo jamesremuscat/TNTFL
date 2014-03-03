@@ -68,7 +68,7 @@ public class RecentGameView extends LinearLayout {
 
     private static final SimpleDateFormat SHORT_DATE_FORMAT = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
     private static final SimpleDateFormat THIS_WEEK_DATE_FORMAT = new SimpleDateFormat("E HH:mm", Locale.ENGLISH);
-    private static final SimpleDateFormat LONG_DATE_FORMAT = new SimpleDateFormat("dd/MM HH:mm", Locale.ENGLISH);
+    private static final SimpleDateFormat LONG_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
 
     public static String format(final Date date) {
 
