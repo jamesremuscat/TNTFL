@@ -70,9 +70,30 @@ public class RecentGameView extends LinearLayout {
     private static final SimpleDateFormat THIS_WEEK_DATE_FORMAT = new SimpleDateFormat("E HH:mm", Locale.ENGLISH);
     private static final SimpleDateFormat LONG_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
 
+    private static final int MILLIS_PER_MINUTE = 1000 * 60;
+
     public static String format(final Date date) {
 
       final Calendar c = Calendar.getInstance();
+
+      c.add(Calendar.MINUTE, -1);
+      if (date.after(c.getTime())) {
+        return "Just now";
+      }
+
+      c.add(Calendar.MINUTE, -59);
+      if (date.after(c.getTime())) {
+        // within the last hour. If anyone's in the office at 2am for a DST switch where this goes wrong, they deserve what they get.
+        final long diff = System.currentTimeMillis() - date.getTime();
+        final int minutes = Math.round(diff / MILLIS_PER_MINUTE);
+        if (minutes == 1) {
+          return "1 minute ago";
+        }
+        else {
+          return String.format("%s minutes ago", minutes);
+        }
+
+      }
 
       // set the calendar to start of today
       c.set(Calendar.HOUR, 0);
