@@ -96,7 +96,7 @@ public class RecentGameView extends LinearLayout {
       }
 
       // set the calendar to start of today
-      c.set(Calendar.HOUR, 0);
+      c.set(Calendar.HOUR_OF_DAY, 0);
       c.set(Calendar.MINUTE, 0);
       c.set(Calendar.SECOND, 0);
 
