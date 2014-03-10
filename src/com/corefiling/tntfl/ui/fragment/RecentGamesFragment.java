@@ -11,16 +11,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 
 import com.corefiling.tntfl.SubmittedGame;
 import com.corefiling.tntfl.TableFootballLadder;
 import com.corefiling.tntfl.TableFootballLadder.SubmissionException;
+import com.corefiling.tntfl.ui.view.AutoScrollingView;
 import com.corefiling.tntfl.ui.view.RecentGameView;
-import com.corefiling.tntfl.ui.view.ScrollingListView;
 
 public class RecentGamesFragment extends SingleLoaderAsyncFragment<List<SubmittedGame>> {
 
-  private ScrollingListView _listView;
+  private AutoScrollingView _scrollView;
 
   @Override
   public Loader<List<SubmittedGame>> onCreateLoader(final int arg0, final Bundle arg1) {
@@ -29,15 +30,22 @@ public class RecentGamesFragment extends SingleLoaderAsyncFragment<List<Submitte
 
   @Override
   public void onLoadFinished(final Loader<List<SubmittedGame>> arg0, final List<SubmittedGame> games) {
-    _listView.setAdapter(new RecentGamesListAdapter(getActivity(), games));
+
+    final LinearLayout ll = new LinearLayout(getActivity());
+    ll.setOrientation(LinearLayout.VERTICAL);
+
+    for (final SubmittedGame g : games) {
+      ll.addView(new RecentGameView(getActivity(), g));
+    }
+
+    _scrollView.addView(ll);
     setContentShown(true);
-    _listView.startScrolling();
   }
 
   @Override
   protected View onCreateViewInternal(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-    _listView = new ScrollingListView(getActivity());
-    return _listView;
+    _scrollView = new AutoScrollingView(getActivity());
+    return _scrollView;
   }
 
   private static class RecentGamesListAdapter extends ArrayAdapter<SubmittedGame> {
