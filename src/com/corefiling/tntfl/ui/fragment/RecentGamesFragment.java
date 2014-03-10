@@ -10,7 +10,6 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 
 import com.corefiling.tntfl.SubmittedGame;
@@ -46,24 +45,6 @@ public class RecentGamesFragment extends SingleLoaderAsyncFragment<List<Submitte
   protected View onCreateViewInternal(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
     _scrollView = new AutoScrollingView(getActivity());
     return _scrollView;
-  }
-
-  private static class RecentGamesListAdapter extends ArrayAdapter<SubmittedGame> {
-
-    public RecentGamesListAdapter(final Context context, final List<SubmittedGame> objects) {
-      super(context, -1, objects);
-    }
-
-    @Override
-    public View getView(final int position, final View convertView, final ViewGroup parent) {
-      final SubmittedGame game = getItem(position);
-      if (convertView instanceof RecentGameView) {
-        ((RecentGameView) convertView).setGame(game);
-        return convertView;
-      }
-      return new RecentGameView(getContext(), game);
-    }
-
   }
 
   private static class RecentGamesLoader extends AsyncTaskLoader<List<SubmittedGame>> {
