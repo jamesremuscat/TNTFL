@@ -41,6 +41,9 @@ public class AutoScrollingView extends ScrollView {
 
   private final class ScrollTimerTask extends TimerTask {
 
+    private boolean _paused = false;
+    private long _unpauseTime = 0;
+
     private int direction = 1;
 
     @Override
@@ -48,15 +51,35 @@ public class AutoScrollingView extends ScrollView {
       post(new Runnable() {
         @Override
         public void run() {
-          smoothScrollBy(0, SCROLL_AMOUNT * direction);
-          if (getScrollY() + getHeight() == getChildAt(0).getHeight()) {
-            direction = -1;
+
+          if (_paused) {
+            if (System.currentTimeMillis() > _unpauseTime) {
+              unpause();
+            }
           }
-          else if (getScrollY() == 0) {
-            direction = 1;
+          else {
+            scrollBy(0, SCROLL_AMOUNT * direction);
+            if (getScrollY() + getHeight() == getChildAt(0).getHeight()) {
+              pause();
+              direction = -1;
+            }
+            else if (getScrollY() == 0) {
+              pause();
+              direction = 1;
+            }
           }
         }
+
       });
+    }
+
+    private synchronized void pause() {
+      _paused = true;
+      _unpauseTime = System.currentTimeMillis() + SCROLL_DELAY;
+    }
+
+    private synchronized void unpause() {
+      _paused = false;
     }
   }
 
