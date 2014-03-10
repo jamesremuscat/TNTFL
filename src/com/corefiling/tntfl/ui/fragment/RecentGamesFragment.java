@@ -39,6 +39,7 @@ public class RecentGamesFragment extends SingleLoaderAsyncFragment<List<Submitte
 
     _scrollView.addView(ll);
     setContentShown(true);
+    _scrollView.startScrolling();
   }
 
   @Override
