@@ -20,6 +20,7 @@ public class AutoScrollingView extends ScrollView {
 
   public AutoScrollingView(final Context context, final AttributeSet attrs) {
     super(context, attrs);
+    setVerticalScrollBarEnabled(false);
   }
 
   public void startScrolling() {
