@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.GradientDrawable.Orientation;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -20,6 +21,21 @@ import com.corefiling.tntfl.R;
 import com.corefiling.tntfl.SubmittedGame;
 
 public class RecentGameView extends LinearLayout {
+
+  private Date _dateTime = null;
+
+  private final Runnable _runner = new Runnable() {
+    // This bit lifted from Android's TextClock
+    @Override
+    public void run() {
+      updateTime();
+
+      final long now = SystemClock.uptimeMillis();
+      final long next = now + (1000 - now % 1000);
+
+      getHandler().postAtTime(_runner, next);
+    }
+  };
 
   public RecentGameView(final Context context) {
     this(context, (AttributeSet) null);
@@ -43,7 +59,8 @@ public class RecentGameView extends LinearLayout {
     ((TextView) findViewById(R.id.txtRedName)).setText(game.getRedPlayer());
     ((TextView) findViewById(R.id.txtRedScore)).setText(Integer.toString(game.getRedScore()));
 
-    ((TextView) findViewById(R.id.txtDate)).setText(GameDateFormatter.format(game.getDateTime()));
+    _dateTime = game.getDateTime();
+    updateTime();
 
     final TextView txtSkillChange = (TextView) findViewById(R.id.txtSkillChange);
     txtSkillChange.setText(String.format("%s: %.3f", getResources().getString(R.string.skill_change), game.getSkillChange()));
@@ -62,6 +79,24 @@ public class RecentGameView extends LinearLayout {
     else {
       findViewById(R.id.scoresBox).setBackgroundDrawable(getResources().getDrawable(R.drawable.red_blue_gradient));
     }
+  }
+
+  protected void updateTime() {
+    if (_dateTime != null) {
+      ((TextView) findViewById(R.id.txtDate)).setText(GameDateFormatter.format(_dateTime));
+    }
+  }
+
+  @Override
+  protected void onAttachedToWindow() {
+    super.onAttachedToWindow();
+    _runner.run();
+  }
+
+  @Override
+  protected void onDetachedFromWindow() {
+    super.onDetachedFromWindow();
+    getHandler().removeCallbacks(_runner);
   }
 
   static class GameDateFormatter {
