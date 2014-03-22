@@ -47,6 +47,11 @@ public class Game implements Parcelable {
   }
 
   @Override
+  public String toString() {
+    return _redPlayer + " " + _redScore + "-" + _blueScore + " " + _bluePlayer;
+  }
+
+  @Override
   public int describeContents() {
     return 0;
   }
