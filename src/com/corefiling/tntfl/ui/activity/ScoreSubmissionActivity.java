@@ -23,11 +23,12 @@ public class ScoreSubmissionActivity extends FragmentActivity implements Dismiss
     final Game game = extras.getParcelable(BUNDLE_GAME_KEY);
 
     final FragmentManager fm = getSupportFragmentManager();
-    final FragmentTransaction transaction = fm.beginTransaction();
 
-    transaction.add(R.id.fragmentHolder, ScoreSubmissionFragment.getInstance(game));
-
-    transaction.commit();
+    if (fm.findFragmentByTag(BUNDLE_GAME_KEY) == null) {
+      final FragmentTransaction transaction = fm.beginTransaction();
+      transaction.add(R.id.fragmentHolder, ScoreSubmissionFragment.getInstance(game), BUNDLE_GAME_KEY);
+      transaction.commit();
+    }
   }
 
   @Override
