@@ -103,6 +103,8 @@ public class TableFootballLadder {
 
     final String url = urlBuilder.toString();
 
+    Log.i("TableFootballLadder", "Submitting game: " + game.toString());
+
     final String jsonResponse = getHttpAccessStrategy(context).get(url);
 
     return SubmittedGame.fromJsonString(jsonResponse);
