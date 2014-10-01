@@ -81,7 +81,6 @@ public class NameSelectionFragment extends Fragment {
       final Button t = new Button(context);
       t.setText(name);
       t.setTextAppearance(context, android.R.style.TextAppearance_Large);
-      t.setTextSize(context.getResources().getDimension(R.dimen.big_font_size));
       t.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(final View v) {
