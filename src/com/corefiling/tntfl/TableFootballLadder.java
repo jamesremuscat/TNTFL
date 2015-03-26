@@ -1,7 +1,17 @@
 package com.corefiling.tntfl;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -53,10 +63,11 @@ public class TableFootballLadder {
 
   private static final String COREFILING_INTERNAL_WIFI_SSID = "cfl_staff";
 
-  private static final String LADDER_BASE_URL = "http://www.int.corefiling.com/~aks/football/";
+  private static final String LADDER_BASE_URL = "http://www.int.corefiling.com/~jrem/tntfl/";
 
-  private static final String LADDER_SUBMIT_URL = LADDER_BASE_URL + "football.cgi?jsonResponse=true&";
-  private static final String LADDER_REST_URL = LADDER_BASE_URL + "rest.cgi?";
+  private static final String LADDER_LADDER_URL = LADDER_BASE_URL + "ladder/json";
+  private static final String LADDER_RECENT_URL = LADDER_BASE_URL + "recent/json";
+  private static final String LADDER_SUBMIT_URL = LADDER_BASE_URL + "game/add/json?";
 
 
   private static HttpAccessStrategy _http = null;
@@ -67,6 +78,7 @@ public class TableFootballLadder {
 
   static HttpAccessStrategy getHttpAccessStrategy(final Context context) {
 
+    _http = new FullHttpAccessStrategy();
     if (_http == null) {
 
       final WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
@@ -88,30 +100,32 @@ public class TableFootballLadder {
 
   public static SubmittedGame submitGame(final Context context, final Game game) throws SubmissionException {
 
-    final StringBuilder urlBuilder = new StringBuilder(LADDER_SUBMIT_URL);
-    urlBuilder.append("redplayer=");
-    urlBuilder.append(game.getRedPlayer());
-    urlBuilder.append("&");
-    urlBuilder.append("redscore=");
-    urlBuilder.append(game.getRedScore());
-    urlBuilder.append("&");
-    urlBuilder.append("blueplayer=");
-    urlBuilder.append(game.getBluePlayer());
-    urlBuilder.append("&");
-    urlBuilder.append("bluescore=");
-    urlBuilder.append(game.getBlueScore());
+    final HttpClient c = new DefaultHttpClient();
+    final HttpPost post = new HttpPost(LADDER_SUBMIT_URL);
 
-    final String url = urlBuilder.toString();
+    try {
 
-    Log.i("TableFootballLadder", "Submitting game: " + game.toString());
+      final List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
+      nameValuePairs.add(new BasicNameValuePair("redPlayer", game.getRedPlayer()));
+      nameValuePairs.add(new BasicNameValuePair("bluePlayer", game.getBluePlayer()));
+      nameValuePairs.add(new BasicNameValuePair("redScore", Integer.toString(game.getRedScore())));
+      nameValuePairs.add(new BasicNameValuePair("blueScore", Integer.toString(game.getBlueScore())));
+      post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
-    final String jsonResponse = getHttpAccessStrategy(context).get(url);
+      Log.i("TableFootballLadder", "Submitting game: " + game.toString());
 
-    return SubmittedGame.fromJsonString(jsonResponse);
+      final HttpResponse response = c.execute(post);
+
+      return SubmittedGame.fromJsonString(EntityUtils.toString(response.getEntity()));
+    }
+    catch (final Exception e) {
+      throw new SubmissionException(e);
+    }
+
   }
 
   public static List<SubmittedGame> getRecentGames(final Context context) throws SubmissionException {
-    final String jsonResponse = getHttpAccessStrategy(context).get(LADDER_REST_URL + "mode=recent");
+    final String jsonResponse = getHttpAccessStrategy(context).get(LADDER_RECENT_URL);
 
     final GsonBuilder gb = new GsonBuilder();
     gb.registerTypeAdapter(SubmittedGame.class, new SubmittedGame.SubmittedGameDeserializer());
@@ -121,13 +135,13 @@ public class TableFootballLadder {
     return g.fromJson(jsonResponse, new TypeToken<List<SubmittedGame>>(){ /* */ }.getType());
   }
 
-  public static List<PlayerStats> getLadder(final Context context) throws SubmissionException {
-    final String jsonResponse = getHttpAccessStrategy(context).get(LADDER_REST_URL + "mode=ladder");
+  public static List<LadderEntry> getLadder(final Context context) throws SubmissionException {
+    final String jsonResponse = getHttpAccessStrategy(context).get(LADDER_LADDER_URL);
     final GsonBuilder gb = new GsonBuilder();
-    gb.registerTypeAdapter(PlayerStats.class, new PlayerStats.PlayerStatsDeserializer());
+    gb.registerTypeAdapter(LadderEntry.class, new LadderEntry.LadderEntryDeserializer());
     final Gson g = gb.create();
 
-    return g.fromJson(jsonResponse, new TypeToken<List<PlayerStats>>() { /* */ }.getType());
+    return g.fromJson(jsonResponse, new TypeToken<List<LadderEntry>>() { /* */ }.getType());
   }
 
   public static class SubmissionException extends Exception {

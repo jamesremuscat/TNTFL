@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.corefiling.tntfl.PlayerStats;
+import com.corefiling.tntfl.LadderEntry;
 import com.corefiling.tntfl.R;
 
 public class PlayerStatsView extends LinearLayout {
@@ -15,7 +15,7 @@ public class PlayerStatsView extends LinearLayout {
     this(context, (AttributeSet) null);
   }
 
-  public PlayerStatsView(final Context context, final int ranking, final PlayerStats playerStats) {
+  public PlayerStatsView(final Context context, final int ranking, final LadderEntry playerStats) {
     this(context, (AttributeSet) null);
     setRanking(ranking);
     setPlayerStats(playerStats);
@@ -39,7 +39,7 @@ public class PlayerStatsView extends LinearLayout {
     }
   }
 
-  public void setPlayerStats(final PlayerStats playerStats) {
+  public void setPlayerStats(final LadderEntry playerStats) {
     final TextView txtPlayerName = (TextView) findViewById(R.id.txtPlayerName);
     txtPlayerName.setText(playerStats.getName());
 
