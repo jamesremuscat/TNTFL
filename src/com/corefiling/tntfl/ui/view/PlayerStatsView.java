@@ -32,10 +32,10 @@ public class PlayerStatsView extends LinearLayout {
     final TextView txtRanking = (TextView) findViewById(R.id.txtRanking);
     txtRanking.setText(Integer.toString(ranking));
     if (ranking == 1) {
-      txtRanking.setBackgroundDrawable(getResources().getDrawable(R.drawable.red_gradient));
+      txtRanking.setBackgroundDrawable(getResources().getDrawable(R.drawable.ladderposition_first));
     }
     else {
-      txtRanking.setBackgroundDrawable(getResources().getDrawable(R.drawable.blue_gradient));
+      txtRanking.setBackgroundDrawable(getResources().getDrawable(R.drawable.ladderposition));
     }
   }
 
