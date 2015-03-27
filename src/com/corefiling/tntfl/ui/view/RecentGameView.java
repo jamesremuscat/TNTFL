@@ -48,7 +48,6 @@ public class RecentGameView extends LinearLayout {
     inflater.inflate(R.layout.view_recent_game, this, true);
   }
 
-  @SuppressWarnings("deprecation")
   public void setGame(final SubmittedGame game) {
     ((TextView) findViewById(R.id.txtBlueName)).setText(game.getBluePlayer());
     ((TextView) findViewById(R.id.txtBlueScore)).setText(Integer.toString(game.getBlueScore()));
@@ -58,14 +57,20 @@ public class RecentGameView extends LinearLayout {
     _dateTime = game.getDateTime();
     updateTime();
 
-    final TextView txtSkillChange = (TextView) findViewById(R.id.txtSkillChange);
-    txtSkillChange.setText(String.format("%s: %.3f", getResources().getString(R.string.skill_change), game.getSkillChange()));
+    final TextView txtSkillChangeRed = (TextView) findViewById(R.id.txtSkillChangeRed);
+    final TextView txtSkillChangeBlue = (TextView) findViewById(R.id.txtSkillChangeBlue);
+
+
 
     if (game.getSkillChangeDirection() == Player.RED) {
-      txtSkillChange.setBackgroundResource(R.drawable.red_gradient);
+      txtSkillChangeRed.setText(String.format("+%.3f", game.getSkillChange()));
+      txtSkillChangeRed.setVisibility(VISIBLE);
+      txtSkillChangeBlue.setVisibility(INVISIBLE);
     }
     else {
-      txtSkillChange.setBackgroundResource(R.drawable.blue_gradient);
+      txtSkillChangeBlue.setText(String.format("+%.3f", game.getSkillChange()));
+      txtSkillChangeBlue.setVisibility(VISIBLE);
+      txtSkillChangeRed.setVisibility(INVISIBLE);
     }
 
     //    if (game.getRedScore() == 10 && game.getBlueScore() == 0 || game.getRedScore() == 0 && game.getBlueScore() == 10) {

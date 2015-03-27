@@ -57,7 +57,7 @@ public class ScoreSubmissionFragment extends SingleLoaderAsyncFragment<Submissio
       ((TextView) getActivity().findViewById(R.id.txtBlueScore)).setText(Integer.toString(game.getBlueScore()));
       ((TextView) getActivity().findViewById(R.id.txtRedName)).setText(game.getRedPlayer());
       ((TextView) getActivity().findViewById(R.id.txtRedScore)).setText(Integer.toString(game.getRedScore()));
-      final TextView txtSkillChange = (TextView) getActivity().findViewById(R.id.txtSkillChange);
+      final TextView txtSkillChange = (TextView) getActivity().findViewById(R.id.txtSkillChangeRed);
       txtSkillChange.setText(String.format("%.3f", game.getSkillChange()));
 
       if (game.getSkillChangeDirection() == Player.RED) {
