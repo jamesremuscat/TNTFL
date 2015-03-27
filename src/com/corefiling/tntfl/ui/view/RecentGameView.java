@@ -6,10 +6,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -72,13 +68,13 @@ public class RecentGameView extends LinearLayout {
       txtSkillChange.setBackgroundResource(R.drawable.blue_gradient);
     }
 
-    if (game.getRedScore() == 10 && game.getBlueScore() == 0 || game.getRedScore() == 0 && game.getBlueScore() == 10) {
-      final Drawable yellowStripe = new GradientDrawable((game.getRedScore() == 10) ? Orientation.LEFT_RIGHT : Orientation.RIGHT_LEFT, new int[] {Color.YELLOW, Color.BLACK});
-      findViewById(R.id.scoresBox).setBackgroundDrawable(yellowStripe);
-    }
-    else {
-      findViewById(R.id.scoresBox).setBackgroundDrawable(getResources().getDrawable(R.drawable.red_blue_gradient));
-    }
+    //    if (game.getRedScore() == 10 && game.getBlueScore() == 0 || game.getRedScore() == 0 && game.getBlueScore() == 10) {
+    //      final Drawable yellowStripe = new GradientDrawable((game.getRedScore() == 10) ? Orientation.LEFT_RIGHT : Orientation.RIGHT_LEFT, new int[] {Color.YELLOW, Color.BLACK});
+    //      findViewById(R.id.scoresBox).setBackgroundDrawable(yellowStripe);
+    //    }
+    //    else {
+    //      findViewById(R.id.scoresBox).setBackgroundDrawable(getResources().getDrawable(R.drawable.red_blue_gradient));
+    //    }
   }
 
   protected void updateTime() {
