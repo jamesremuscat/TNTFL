@@ -4,8 +4,6 @@ import org.mockito.Mockito;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
@@ -56,11 +54,10 @@ public class TestScoreSubmissionActivity extends ActivityInstrumentationTestCase
     assertEquals("bluePlayer", ((TextView) activity.findViewById(R.id.txtBlueName)).getText());
     assertEquals("7", ((TextView) activity.findViewById(R.id.txtRedScore)).getText());
     assertEquals("3", ((TextView) activity.findViewById(R.id.txtBlueScore)).getText());
-    final TextView txtSkillChange = (TextView) activity.findViewById(R.id.txtSkillChange);
-    assertEquals("13.124", txtSkillChange.getText());
-    final Drawable background = txtSkillChange.getBackground();
-    assertEquals(GradientDrawable.class, background.getClass());
-    // I don't see a way of asserting that it's pointing the right way...
+    final TextView txtSkillChange = (TextView) activity.findViewById(R.id.txtSkillChangeRed);
+    assertEquals("+13.124", txtSkillChange.getText());
+    final TextView txtSkillChangeBlue = (TextView) activity.findViewById(R.id.txtSkillChangeBlue);
+    assertEquals(View.INVISIBLE, txtSkillChangeBlue.getVisibility());
   }
 
   protected void waitForLoad(final Activity activity) throws InterruptedException {
