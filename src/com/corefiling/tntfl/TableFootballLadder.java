@@ -78,7 +78,6 @@ public class TableFootballLadder {
 
   static HttpAccessStrategy getHttpAccessStrategy(final Context context) {
 
-    _http = new FullHttpAccessStrategy();
     if (_http == null) {
 
       final WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
