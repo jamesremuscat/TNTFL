@@ -57,7 +57,7 @@ public class TableFootballLadder {
 
   private static final String LADDER_LADDER_URL = LADDER_BASE_URL + "ladder/json";
   private static final String LADDER_RECENT_URL = LADDER_BASE_URL + "recent/json";
-  private static final String LADDER_SUBMIT_URL = LADDER_BASE_URL + "game/add/json?";
+  private static final String LADDER_SUBMIT_URL = LADDER_BASE_URL + "game/add/json";
 
 
   private static HttpAccessStrategy _http = null;
