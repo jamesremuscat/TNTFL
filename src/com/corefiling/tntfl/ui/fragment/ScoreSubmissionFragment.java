@@ -57,14 +57,17 @@ public class ScoreSubmissionFragment extends SingleLoaderAsyncFragment<Submissio
       ((TextView) getActivity().findViewById(R.id.txtBlueScore)).setText(Integer.toString(game.getBlueScore()));
       ((TextView) getActivity().findViewById(R.id.txtRedName)).setText(game.getRedPlayer());
       ((TextView) getActivity().findViewById(R.id.txtRedScore)).setText(Integer.toString(game.getRedScore()));
-      final TextView txtSkillChange = (TextView) getActivity().findViewById(R.id.txtSkillChangeRed);
-      txtSkillChange.setText(String.format("%+.3f", game.getSkillChange()));
+      final TextView txtSkillChangeRed = (TextView) getActivity().findViewById(R.id.txtSkillChangeRed);
+      final TextView txtSkillChangeBlue = (TextView) getActivity().findViewById(R.id.txtSkillChangeBlue);
+
 
       if (game.getSkillChangeDirection() == Player.RED) {
-        txtSkillChange.setBackgroundResource(R.drawable.red_gradient);
+        txtSkillChangeRed.setText(String.format("%+.3f", game.getSkillChange()));
+        txtSkillChangeBlue.setVisibility(View.INVISIBLE);
       }
       else {
-        txtSkillChange.setBackgroundResource(R.drawable.blue_gradient);
+        txtSkillChangeBlue.setText(String.format("%+.3f", game.getSkillChange()));
+        txtSkillChangeRed.setVisibility(View.INVISIBLE);
       }
 
       TableFootballLadder.addRecentPlayer(getActivity(), game.getRedPlayer());

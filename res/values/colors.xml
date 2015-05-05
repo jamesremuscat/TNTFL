@@ -2,5 +2,8 @@
 
   <color name="black_overlay">#66000000</color>
   <color name="text">#FFFFFFFF</color>
+  
+  <color name="red_skill_change">#FFFFC0C0</color>
+  <color name="blue_skill_change">#FFC0C0FF</color>
 
 </resources>
