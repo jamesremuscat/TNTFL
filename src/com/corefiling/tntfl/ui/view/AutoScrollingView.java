@@ -30,7 +30,9 @@ public class AutoScrollingView extends ScrollView {
   }
 
   public void stopScrolling() {
-    _timer.cancel();
+    if (_timer != null) {
+      _timer.cancel();
+    }
   }
 
   @Override
