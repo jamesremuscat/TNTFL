@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.corefiling.tntfl.Game;
 import com.corefiling.tntfl.JsonDataTestUtils;
 import com.corefiling.tntfl.R;
+import com.corefiling.tntfl.SubmittedGame;
 import com.corefiling.tntfl.TableFootballLadder;
 import com.corefiling.tntfl.network.HttpAccessStrategy;
 import com.corefiling.tntfl.ui.fragment.AsyncFragment;
@@ -45,7 +46,7 @@ public class TestScoreSubmissionActivity extends ActivityInstrumentationTestCase
     final HttpAccessStrategy http = Mockito.mock(HttpAccessStrategy.class);
     TableFootballLadder.setHttpAccessStrategy(http);
 
-    Mockito.when(http.get(Mockito.anyString())).thenReturn(JsonDataTestUtils.sampleDataAsString(getClass(), "submittedGame.json"));
+    Mockito.when(http.postGame(Mockito.anyString(), Mockito.any(Game.class))).thenReturn(SubmittedGame.fromJsonString(JsonDataTestUtils.sampleDataAsString(getClass(), "submittedGame.json")));
 
     final ScoreSubmissionActivity activity = getActivity();
     waitForLoad(activity);

@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
+import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import android.content.Context;
@@ -86,7 +87,7 @@ public class TestTableFootballLadder extends InstrumentationTestCase {
     final HttpAccessStrategy http = mock(HttpAccessStrategy.class);
     TableFootballLadder.setHttpAccessStrategy(http);
 
-    when(http.get(anyString())).thenReturn(JsonDataTestUtils.sampleDataAsString(getClass(), "submittedGame.json"));
+    when(http.postGame(anyString(), Matchers.any(Game.class))).thenReturn(SubmittedGame.fromJsonString(JsonDataTestUtils.sampleDataAsString(getClass(), "submittedGame.json")));
 
     final Game g = new Game();
     g.setBluePlayer("bluePlayer");
@@ -96,7 +97,7 @@ public class TestTableFootballLadder extends InstrumentationTestCase {
 
     TableFootballLadder.submitGame(mockContext, g);
 
-    verify(http).get("http://www.int.corefiling.com/~aks/football/football.cgi?jsonResponse=true&redplayer=redPlayer&redscore=7&blueplayer=bluePlayer&bluescore=3");
+    verify(http).postGame(eq("http://www.int.corefiling.com/~jrem/tntfl/game/add/json"), Matchers.any(Game.class));
     Mockito.verifyZeroInteractions(mockContext);
   }
 
@@ -109,7 +110,7 @@ public class TestTableFootballLadder extends InstrumentationTestCase {
 
     final List<SubmittedGame> recentGames = TableFootballLadder.getRecentGames(mockContext);
 
-    verify(http).get("http://www.int.corefiling.com/~aks/football/rest.cgi?mode=recent");
+    verify(http).get("http://www.int.corefiling.com/~jrem/tntfl/recent/json");
     Mockito.verifyZeroInteractions(mockContext);
 
     assertEquals(5, recentGames.size());
@@ -133,7 +134,7 @@ public class TestTableFootballLadder extends InstrumentationTestCase {
 
     final List<LadderEntry> ladder = TableFootballLadder.getLadder(mockContext);
 
-    verify(http).get("http://www.int.corefiling.com/~aks/football/rest.cgi?mode=ladder");
+    verify(http).get("http://www.int.corefiling.com/~jrem/tntfl/ladder/json");
     Mockito.verifyZeroInteractions(mockContext);
 
     assertEquals(31, ladder.size());
