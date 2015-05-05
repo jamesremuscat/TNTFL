@@ -3,12 +3,6 @@ package com.corefiling.tntfl.ui.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.GradientDrawable.Orientation;
-import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -74,12 +68,12 @@ public class ScoreSubmissionFragment extends SingleLoaderAsyncFragment<Submissio
       TableFootballLadder.addRecentPlayer(getActivity(), game.getBluePlayer());
 
       if (game.getRedScore() == 10 && game.getBlueScore() == 0 || game.getRedScore() == 0 && game.getBlueScore() == 10) {
-        final Resources resources = getActivity().getResources();
-        final Drawable baseState = resources.getDrawable(R.drawable.red_blue_gradient);
-        final Drawable middleState = new GradientDrawable((game.getRedScore() == 10) ? Orientation.LEFT_RIGHT : Orientation.RIGHT_LEFT, new int[] {Color.YELLOW, Color.BLACK});
-        final TransitionDrawable td = new TransitionDrawable(new Drawable[] { baseState, middleState });
-        getActivity().findViewById(R.id.scoresBox).setBackgroundDrawable(td);
-        td.startTransition(2000);
+        //        final Resources resources = getActivity().getResources();
+        //        final Drawable baseState = resources.getDrawable(R.drawable.red_blue_gradient);
+        //        final Drawable middleState = new GradientDrawable((game.getRedScore() == 10) ? Orientation.LEFT_RIGHT : Orientation.RIGHT_LEFT, new int[] {Color.YELLOW, Color.BLACK});
+        //        final TransitionDrawable td = new TransitionDrawable(new Drawable[] { baseState, middleState });
+        //        getActivity().findViewById(R.id.scoresBox).setBackgroundDrawable(td);
+        //        td.startTransition(2000);
       }
 
       setContentShown(true);
