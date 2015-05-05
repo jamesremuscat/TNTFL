@@ -1,5 +1,9 @@
 package com.corefiling.tntfl.network;
 
+import com.corefiling.tntfl.Game;
+import com.corefiling.tntfl.SubmittedGame;
+import com.corefiling.tntfl.TableFootballLadder.SubmissionException;
+
 
 public class FakeHttpAccessStrategy implements HttpAccessStrategy {
 
@@ -17,6 +21,11 @@ public class FakeHttpAccessStrategy implements HttpAccessStrategy {
     else {
       return "{}";
     }
+  }
+
+  @Override
+  public SubmittedGame postGame(final String url, final Game game) throws SubmissionException {
+    return SubmittedGame.fromJsonString(" { \"red\" : { \"name\" : \"tmm\", \"href\" : \"../../player/tmm/json\", \"score\" : 2, \"skillChange\" : -3.3271082683, \"rankChange\" : 0, \"newRank\" : 10 }, \"blue\" : { \"name\" : \"njlgad\", \"href\" : \"../../player/njlgad/json\", \"score\" : 8, \"skillChange\" : 3.3271082683, \"rankChange\" : 0, \"newRank\" : 2 }, \"positionSwap\" : false, \"date\" : 1430821687}");
   }
 
 }
