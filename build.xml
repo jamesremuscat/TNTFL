@@ -87,11 +87,23 @@
          in order to avoid having your file be overridden by tools such as "android update project"
     -->
     <!-- version-tag: custom -->
-    <import file="${sdk.dir}/tools/ant/build.xml" />
+  <import file="${sdk.dir}/tools/ant/build.xml" />
+    
+  <macrodef name="wake-device">
+    <sequential>
+      <echo>Waking device from sleep...</echo>
+      <exec executable="sh" outputproperty="tests.output">
+        <arg value="-c" />
+        <arg line="'${adb} shell dumpsys power | grep \'mScreenOn=true\' | xargs -0 test -z &amp;&amp; ${adb} shell input keyevent 26'" />
+      </exec>
+    </sequential>
+  </macrodef>
+    
   <macrodef name="run-tests-helper">
     <attribute name="emma.enabled" default="false" />
     <element name="extra-instrument-args" optional="yes" />
     <sequential>
+      <wake-device />
       <echo>Running tests with ${adb}...</echo>
       <exec executable="${adb}" failonerror="true" outputproperty="tests.output">
         <arg line="${adb.device.arg}" />
