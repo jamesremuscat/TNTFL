@@ -9,6 +9,7 @@ import android.content.Context;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -80,6 +81,25 @@ public class RecentGameView extends LinearLayout {
     //    else {
     //      findViewById(R.id.scoresBox).setBackgroundDrawable(getResources().getDrawable(R.drawable.red_blue_gradient));
     //    }
+
+    final TextView txtRankChangeRed = (TextView) findViewById(R.id.txtPosChangeRed);
+    final TextView txtRankChangeBlue = (TextView) findViewById(R.id.txtPosChangeBlue);
+
+    if (game.getRedRankChange() != 0) {
+      txtRankChangeRed.setText(String.format("%+d", game.getRedRankChange()));
+      txtRankChangeRed.setVisibility(View.VISIBLE);
+    }
+    else {
+      txtRankChangeRed.setVisibility(View.INVISIBLE);
+    }
+
+    if (game.getBlueRankChange() != 0) {
+      txtRankChangeBlue.setText(String.format("%+d", game.getBlueRankChange()));
+      txtRankChangeBlue.setVisibility(View.VISIBLE);
+    }
+    else {
+      txtRankChangeBlue.setVisibility(View.INVISIBLE);
+    }
   }
 
   protected void updateTime() {
