@@ -16,6 +16,21 @@ public class SubmittedGame extends Game {
   private Player _skillChangeDirection;
   private Date _dateTime;
 
+  private int _redRankChange = 0;
+  private int _blueRankChange = 0;
+
+  public int getRedRankChange() {
+    return _redRankChange;
+  }
+  public void setRedRankChange(final int redRankChange) {
+    _redRankChange = redRankChange;
+  }
+  public int getBlueRankChange() {
+    return _blueRankChange;
+  }
+  public void setBlueRankChange(final int blueRankChange) {
+    _blueRankChange = blueRankChange;
+  }
   public float getSkillChange() {
     return _skillChange;
   }
@@ -49,9 +64,17 @@ public class SubmittedGame extends Game {
     g.setRedPlayer(redPlayer.get("name").getAsString());
     g.setRedScore(redPlayer.get("score").getAsInt());
 
+    if (redPlayer.has("rankChange")) {
+      g.setRedRankChange(redPlayer.get("rankChange").getAsInt());
+    }
+
     final JsonObject bluePlayer = o.get("blue").getAsJsonObject();
     g.setBluePlayer(bluePlayer.get("name").getAsString());
     g.setBlueScore(bluePlayer.get("score").getAsInt());
+
+    if (bluePlayer.has("rankChange")) {
+      g.setBlueRankChange(bluePlayer.get("rankChange").getAsInt());
+    }
 
     if (o.has("skillChange")) { // nicer version of JSON
       final JsonObject skill = o.get("skillChange").getAsJsonObject();

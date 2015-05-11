@@ -7,6 +7,7 @@
     android:padding="10dp" >
 
     <LinearLayout
+        android:baselineAligned="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="top|center_horizontal"
@@ -31,15 +32,56 @@
                 android:textColor="@color/text"
                 android:textSize="@dimen/bigger_font_size" />
 
-            <TextView
-                android:id="@+id/txtSkillChangeRed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/red_skillchange"
-                android:gravity="center_horizontal"
-                android:padding="2dp"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="@dimen/big_font_size" />
+            <LinearLayout
+                android:baselineAligned="false"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" >
+
+                    <TextView
+                        android:id="@+id/txtPosChangeRed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/red_skillchange"
+                        android:gravity="center_horizontal"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="+2"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="@dimen/big_font_size" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" >
+
+                    <TextView
+                        android:id="@+id/txtSkillChangeRed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/red_skillchange"
+                        android:gravity="center_horizontal"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="@dimen/big_font_size" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -55,7 +97,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:paddingLeft="40dp"
                 android:text="8"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/bigger_font_size"
@@ -75,7 +116,6 @@
                 android:id="@+id/txtBlueScore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="40dp"
                 android:text="8"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/bigger_font_size"
@@ -101,15 +141,54 @@
                 android:textColor="@color/text"
                 android:textSize="@dimen/bigger_font_size" />
 
-            <TextView
-                android:id="@+id/txtSkillChangeBlue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/blue_skillchange"
-                android:gravity="center_horizontal"
-                android:padding="2dp"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="@dimen/big_font_size" />
+            <LinearLayout
+                android:baselineAligned="false"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" >
+
+                    <TextView
+                        android:id="@+id/txtSkillChangeBlue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/blue_skillchange"
+                        android:gravity="center_horizontal"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="@dimen/big_font_size" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" >
+
+                    <TextView
+                        android:id="@+id/txtPosChangeBlue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/blue_skillchange"
+                        android:gravity="center_horizontal"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="+2"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="@dimen/big_font_size" />
+
+                </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

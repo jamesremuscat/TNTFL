@@ -64,6 +64,25 @@ public class ScoreSubmissionFragment extends SingleLoaderAsyncFragment<Submissio
         txtSkillChangeRed.setVisibility(View.INVISIBLE);
       }
 
+      final TextView txtRankChangeRed = (TextView) getActivity().findViewById(R.id.txtPosChangeRed);
+      final TextView txtRankChangeBlue = (TextView) getActivity().findViewById(R.id.txtPosChangeBlue);
+
+      if (game.getRedRankChange() != 0) {
+        txtRankChangeRed.setText(String.format("%+d", game.getRedRankChange()));
+        txtRankChangeRed.setVisibility(View.VISIBLE);
+      }
+      else {
+        txtRankChangeRed.setVisibility(View.INVISIBLE);
+      }
+
+      if (game.getBlueRankChange() != 0) {
+        txtRankChangeBlue.setText(String.format("%+d", game.getBlueRankChange()));
+        txtRankChangeBlue.setVisibility(View.VISIBLE);
+      }
+      else {
+        txtRankChangeBlue.setVisibility(View.INVISIBLE);
+      }
+
       TableFootballLadder.addRecentPlayer(getActivity(), game.getRedPlayer());
       TableFootballLadder.addRecentPlayer(getActivity(), game.getBluePlayer());
 
