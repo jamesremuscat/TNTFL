@@ -1,0 +1,13 @@
+{
+  "red" : {
+    "name" : "redPlayer",
+    "score" : 7,
+    "skillChange" : 13.12449
+  },
+  "blue" : {
+    "name" : "bluePlayer",
+    "score" : 3,
+    "skillChange" : -13.12449
+  },
+  "date" : 1392915957
+}
